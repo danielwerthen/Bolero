@@ -53,7 +53,7 @@ app.get('/api/getthoughts', function (req, res, next) {
   }, { userId: req.session.currentUser._id });
 });
 
-app.post('/api/getthoughts', function(req, res) {
+app.post('/api/addthought', function(req, res) {
   if (req.body && req.body.title && req.body.content) {
     dbio.insertDoc('thoughts', buildThought(req.body.title, req.body.content, req.session.currentUser), function (err) {
       res.end();
