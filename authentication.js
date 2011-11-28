@@ -61,10 +61,8 @@ exports = module.exports = function authentication(options){
       });
     }
     else {
-            req.session.currentUser = user;
-            req.session.auth = true;
-            next();
-            return;
+      res.redirect('/login');
+      return;
     }
   };
 };

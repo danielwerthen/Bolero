@@ -5,6 +5,7 @@ var MemoryStore = require('connect').session.MemoryStore;
 var url = require('url');
 var dbio = require('./dbio');
 var auth = require('./authentication');
+var db = require('mongodb');
 
 app.set('view engine', 'jade');
 app.use(connect.bodyParser());
@@ -13,12 +14,12 @@ app.use(express.session({secret: 'your_secret_is_safe_here', store:new MemorySto
 app.use(auth());
 app.use(app.router);
 
-var buildThought = function(title, content) {
+var buildThought = function(title, content, user) {
   return {
-    userId: 5,
+    createDate: new Date(),
+    userId: user._id,
     title: title,
-    content: content,
-    createDate: Date.now
+    content: content
   };
 };
 
@@ -33,11 +34,9 @@ app.get('/', function (req, res, next) {
       res.end();
       return;
     }
-    for(var i in thoughts) {
-      res.write(JSON.stringify(thoughts[i]) + '\n');
-    }
-    res.end();
-  });
+    console.log(thoughts.length);
+    res.render('index', { thoughts: thoughts });
+  }, { userId: req.session.currentUser._id });
 });
 
 app.get('/registrate', function (req, res, next) {
@@ -59,10 +58,16 @@ app.post('/login', function(req, res, next) {
 app.get('/thought', function (req, res, next){
   var parts = url.parse(req.url, true);
   
-  dbio.insertDoc('thoughts', buildThought(parts.query.title, parts.query.content), function (err) {
-    res.end();
+  dbio.insertDoc('thoughts', buildThought(parts.query.title, parts.query.content, req.session.currentUser), function (err) {
+    res.redirect('home');
   });
 }); 
+
+app.post('/thought', function(req, res, next){
+  dbio.insertDoc('thoughts', buildThought(req.body.title, req.body.content, req.session.currentUser), function (err) {
+    res.redirect('back');
+  });
+});
 
 if (process.env.PORT)
   app.listen(process.env.PORT);

@@ -80,7 +80,7 @@ exports.findDoc = function (collection, query, callback) {
   });
 };
 
-exports.getDocs = function (collection, callback) {
+exports.getDocs = function (collection, callback, query) {
   getDb(function (err, db) {
     var done = function (err, result) {
         callback(err, result);
@@ -97,7 +97,7 @@ exports.getDocs = function (collection, callback) {
         done(err, null);
       }
       else {
-        collection.find(function (err, cursor) {
+        var find = function (err, cursor) {
           if (err !== null) {
             done(err, null);
           }
@@ -112,7 +112,11 @@ exports.getDocs = function (collection, callback) {
               }
             });
           }
-        });
+        };
+        if (query === undefined)
+          collection.find(find);
+        else
+          collection.find(query, find);
       }
     });
   });
