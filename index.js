@@ -34,9 +34,34 @@ app.get('/', function (req, res, next) {
       res.end();
       return;
     }
-    console.log(thoughts.length);
     res.render('index', { thoughts: thoughts });
   }, { userId: req.session.currentUser._id });
+});
+
+app.get('/api/getthoughts', function (req, res, next) {
+  dbio.getDocs('thoughts', function (err, thoughts) {
+    if (err !== null) {
+      res.end();
+      return;
+    }
+    if (thoughts === undefined) {
+      res.end();
+      return;
+    }
+    res.writeHead(200, {'Content-Type': 'application/json'});
+    res.end(JSON.stringify({ thoughts: thoughts }));
+  }, { userId: req.session.currentUser._id });
+});
+
+app.post('/api/getthoughts', function(req, res) {
+  if (req.body && req.body.title && req.body.content) {
+    dbio.insertDoc('thoughts', buildThought(req.body.title, req.body.content, req.session.currentUser), function (err) {
+      res.end();
+    });  
+  }
+  else {
+    res.end();
+  }
 });
 
 app.get('/registrate', function (req, res, next) {
