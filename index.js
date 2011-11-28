@@ -26,16 +26,13 @@ var buildThought = function(title, content) {
 app.get('/', function (req, res, next) {
   dbio.getDocs('thoughts', function (err, thoughts) {
     if (err !== null) {
-      console.log(JSON.stringify(err));
       res.end();
       return;
     }
     if (thoughts === undefined) {
-      console.log('no result');
       res.end();
       return;
     }
-    console.log(thoughts.length);
     for(var i in thoughts) {
       res.write(JSON.stringify(thoughts[i]) + '\n');
     }
@@ -51,19 +48,23 @@ app.post('/registrate', function (req, res, next) {
   res.render('registration', { auth: req.session.auth });
 });
 
+app.get('/login', function(req, res, next) {
+  res.render('login');
+});
+
+app.post('/login', function(req, res, next) {
+  res.redirect('home');
+});
+
 app.get('/thought', function (req, res, next){
   var parts = url.parse(req.url, true);
   
   dbio.insertDoc('thoughts', buildThought(parts.query.title, parts.query.content), function (err) {
-    if (err !== null) { 
-      console.log(JSON.stringify(err)); 
-    }
-    else { 
-      console.log('inserted'); 
-    }
-  
     res.end();
   });
 }); 
 
-app.listen(process.env.PORT);
+if (process.env.PORT)
+  app.listen(process.env.PORT);
+else
+  app.listen(8888);

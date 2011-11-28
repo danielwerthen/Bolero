@@ -1,0 +1,13 @@
+h2 Please do enter your login
+form(action='/login', enctype='multipart/form-data', method='post')
+	ul
+		li
+			label Username:
+				input(name='username')
+		li
+			label Password:
+				input(name='password',
+					type='password')
+		li
+			input(value='submit',
+				type='submit')

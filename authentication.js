@@ -10,6 +10,12 @@ exports = module.exports = function authentication(options){
     // Logout
     if (parts.pathname == "/logout" ) {
       req.session.destroy();
+      res.redirect('/login');
+      return;
+    }
+    if (parts.pathname == "/login" && req.method == 'GET') {
+      next();
+      return;
     }
     
     if (parts.pathname == "/registrate") {
@@ -19,9 +25,11 @@ exports = module.exports = function authentication(options){
         var user = { username: req.body.user.name,
           password: req.body.user.password,
           email: req.body.user.email };
-        db.insertDoc('users', user, function(err, 
-        req.session.auth = true;
-        next();
+        db.insertDoc('users', user, function(err, userDoc) {
+          req.session.currentUser = userDoc;
+          req.session.auth = true;
+          next();
+        });
       }
       return;
     }
@@ -36,19 +44,27 @@ exports = module.exports = function authentication(options){
     // ########
     // Auth - Replace this simple if with you Database or File or Whatever...
     // If Database, you need a Async callback...
-    if (parts.pathname == "/login" && 
-        req.method == 'POST' &&
-        parts.query.name == "max" && 
-        parts.query.pwd == "herewego" ) {
-      req.session.auth = true;
-      next();
-      return;
+    if (parts.pathname == "/login" && req.method == 'POST') {
+      db.findDoc('users', 
+        { username: req.body.username, password: req.body.password }, 
+        function(err, user) {
+          if (err !== null || user === null) {
+            res.redirect('/login');
+            return;
+          }
+          else {
+            req.session.currentUser = user;
+            req.session.auth = true;
+            next();
+            return;
+          }
+      });
     }
-
-    // ####
-    // User is not unauthorized. Stop talking to him.
-    res.writeHead(403);
-    res.end('Sorry you are unauthorized.\n\nFor a login use: /login?name=max&pwd=herewego');
-    return;
+    else {
+            req.session.currentUser = user;
+            req.session.auth = true;
+            next();
+            return;
+    }
   };
 };

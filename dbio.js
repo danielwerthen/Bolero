@@ -20,23 +20,60 @@ function getDb(done) {
 
 exports.insertDoc = function (collection, thought, callback) {
   getDb(function (err, db) {
-    if (db === null) {
-      done(err);
-      return;
-    }
     var done = function (err, result) {
         callback(err, result);
         if (db !== undefined) {
           db.close();
         }
-        };
+      };
+    if (db === null) {
+      done(err);
+      return;
+    }
     db.collection(collection, function (err, collection) {
       if (err !== null) {
         done(err);
       }
       else {
-        collection.insert(thought, function (thoughts) {
-          done(null);
+        collection.insert(thought, function (err, doc) {
+          done(null, doc);
+        });
+      }
+    });
+  });
+};
+
+exports.findDoc = function (collection, query, callback) {
+  getDb(function (err, db) {
+    var done = function (err, result) {
+        callback(err, result);
+        if (db !== undefined) {
+          db.close();
+        }
+      };
+    if (db === null) {
+      done(err, null);
+      return;
+    }
+    db.collection(collection, function(err, collection) {
+      if (err !== null) {
+        done(err, null);
+      }
+      else {
+        collection.find(query, function (err, cursor) {
+          if (err !== null) {
+            done(err, null);
+          }
+          else {
+            cursor.nextObject(function (err, doc) {
+              if (err !== null) {
+                done(err);
+              }
+              else {
+                done(err, doc);
+              }
+            });
+          }
         });
       }
     });
@@ -45,16 +82,16 @@ exports.insertDoc = function (collection, thought, callback) {
 
 exports.getDocs = function (collection, callback) {
   getDb(function (err, db) {
-    if (db === null) {
-      done(err, null);
-      return;
-    }
     var done = function (err, result) {
         callback(err, result);
         if (db !== undefined) {
           db.close();
         }
-        };
+      };
+    if (db === null) {
+      done(err, null);
+      return;
+    }
     db.collection(collection, function (err, collection) {
       if (err !== null) {
         done(err, null);
@@ -66,12 +103,12 @@ exports.getDocs = function (collection, callback) {
           }
           else {
             if (cursor.toArray === undefined) console.log('error');
-            cursor.toArray(function (err, thoughts) {
+            cursor.toArray(function (err, docs) {
               if (err !== null) {
                 done(err);
               }
               else {
-                done(null, thoughts);
+                done(null, docs);
               }
             });
           }
