@@ -1,0 +1,177 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"loc",
+				"localPort"
+			],
+			[
+				"lo",
+				"localPort"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 0.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/C/git/celph/styles/main.css",
+		"/C/git/celph/web.config",
+		"/C/git/imagraph/imagraph.sublime-project",
+		"/C/git/Repositivity/server/server_config.js",
+		"/C/git/diom/dataio/receiveddata.js",
+		"/C/git/diom/dataio/receiveddata",
+		"/C/Users/dwn.GAIA2000/AppData/Roaming/Sublime Text 2/Packages/Default/Base File.sublime-settings",
+		"/C/git/Repositivity/server/errout.js",
+		"/C/git/Repositivity/server/routing.js",
+		"/C/git/Repositivity/hello.js",
+		"/C/git/Repositivity/views/index.jade",
+		"/C/git/Repositivity/index.js",
+		"/C/git/Repositivity/controllers/thought_controller.js",
+		"/C/Users/dwn.GAIA2000/AppData/Roaming/Sublime Text 2/Packages/Default/Global.sublime-settings",
+		"/C/Users/dwn.GAIA2000/AppData/Roaming/Sublime Text 2/Packages/User/Global.sublime-settings",
+		"/C/Users/dwn.GAIA2000/AppData/Roaming/Sublime Text 2/Packages/User/JavaScript.sublime-settings",
+		"/C/Users/dwn.GAIA2000/AppData/Roaming/Sublime Text 2/Packages/User/Distraction Free.sublime-settings",
+		"/C/git/Repositivity/server/index.js",
+		"/C/git/Repositivity/server_side/routing.js",
+		"/C/git/Repositivity/server_side/errout.js",
+		"/C/git/Repositivity/server_side/index.js",
+		"/C/git/Repositivity/server_side/server_config.js",
+		"/C/Lib/Foundation/index.html",
+		"/C/Users/dwn.GAIA2000/Downloads/html2jade-0.0.8/package/README.md",
+		"/C/Veracity/repositivity/server/web.config",
+		"/C/Veracity/repositivity/presentation/index.html",
+		"/C/Veracity/repositivity/server/app.js",
+		"/C/Veracity/repositivity/presentation/helloworld/hello.js",
+		"/C/Lib/Foundation/javascripts/foundation.js"
+	],
+	"find":
+	{
+		"height": 32.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": true,
+		"find_history":
+		[
+			"local2",
+			"config",
+			"minport",
+			"maxport",
+			"orbit"
+		],
+		"highlight": true,
+		"in_selection": true,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"local3",
+			"minPort",
+			"maxPort"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 33.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"replace":
+	{
+		"height": 62.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 150.0,
+	"status_bar_visible": true
+}
