@@ -1,0 +1,17 @@
+div
+	ul
+		each t in thoughts
+			li
+				div
+					h3= t.title
+					p= t.content
+					p= t.createDate
+		li
+			div
+				form(action='/thought', enctype='multipart/form-data', method='post')
+					h3 Title:
+						input(name='title')
+					p Content:
+						input(name='content')
+					input(value='submit',
+						type='submit')

@@ -1,0 +1,19 @@
+- if (auth === true)
+  h2 Hello friend
+- else
+  h2 Who are you?
+  form(action='/registrate', enctype='multipart/form-data', method='post')
+    ul
+      li
+        label Email:
+          input(name='user[email]')
+      li
+        label Username:
+          input(name='user[name]')
+      li
+        label Password:
+          input(name='user[password]',
+            type='password')
+      li
+        input(value='submit',
+          type='submit')
