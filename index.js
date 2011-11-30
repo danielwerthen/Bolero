@@ -82,7 +82,7 @@ app.post('/login', function(req, res, next) {
 
 app.get('/thought', function (req, res, next){
   var parts = url.parse(req.url, true);
-  
+  //nothing to see here
   dbio.insertDoc('thoughts', buildThought(parts.query.title, parts.query.content, req.session.currentUser), function (err) {
     res.redirect('home');
   });
