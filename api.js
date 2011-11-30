@@ -35,7 +35,10 @@ var buildThought = function(title, content, user) {
 };
 
 app.post('/login', function(req, res) {
-  res.writeHead(200, {'Content-Type': 'application/json'});
+  response.writeHead(200, {
+  	'Content-Type': 'application/json',
+		'Access-Control-Allow-Origin' : '*'
+	});
   res.end(JSON.stringify({ authorized: true }));
 });
 
@@ -53,7 +56,10 @@ app.get('/api/getthoughts', function (req, res, next) {
       res.end();
       return;
     }
-    res.writeHead(200, {'Content-Type': 'application/json'});
+    response.writeHead(200, {
+    'Content-Type': 'application/json',
+		'Access-Control-Allow-Origin' : '*'
+	});
     res.end(JSON.stringify({ thoughts: thoughts }));
   }, { userId: req.session.currentUser._id });
 });
