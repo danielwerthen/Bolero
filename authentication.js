@@ -10,7 +10,10 @@ exports = module.exports = function authentication(options){
     // Logout
     if (parts.pathname == "/logout" ) {
       req.session.destroy();
-      res.redirect('/login');
+      if (options.redirect === true)
+        res.redirect('/login');
+      else
+        res.end();
       return;
     }
     if (parts.pathname == "/login" && req.method == 'GET') {
@@ -49,7 +52,10 @@ exports = module.exports = function authentication(options){
         { username: req.body.username, password: req.body.password }, 
         function(err, user) {
           if (err !== null || user === null) {
-            res.redirect('/login');
+            if (options.redirect === true)
+              res.redirect('/login');
+            else
+              res.end();
             return;
           }
           else {
@@ -61,9 +67,12 @@ exports = module.exports = function authentication(options){
       });
     }
     else {
-      res.redirect('/login');
-     //res.end();
-     return;
+      if (options.redirect === true)
+          res.redirect('/login');
+        else
+          res.writeHead(200, {'Content-Type': 'application/json'});
+          res.end(JSON.stringify({ authorized: false }));
+      return;
     }
   };
 };
