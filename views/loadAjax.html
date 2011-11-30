@@ -1,0 +1,64 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/base/jquery-ui.css" type="text/css" media="all" />
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js" type="text/javascript"></script>
+    	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js" type="text/javascript"></script>
+        <script type="text/javascript">
+        $(function(){
+        	var getButton = $("#getButton").button();
+        	getButton.click(function(){
+        		
+	        		var url = $("#urltoload").val();
+	        		var data = $("#data").val();
+	        		$.ajax({
+				        url: url,
+						type: "GET",
+				        cache: false,
+				        timeout: 5000,
+						data: data,
+				        success: function(data) {
+				           alert("success");
+				        },
+				        error: function(jqXHR, textStatus, errorThrown) {
+				            alert('error: ' + textStatus + ", " + errorThrown);
+				        }
+				    });
+                });
+                
+            var postButton = $("#postButton").button();
+            postButton.click(function(){
+            	
+                 	var url = $("#urltoload").val();
+	        		var data = $("#data").val();
+	        		$.ajax({
+				        url: url,
+						type: "POST",
+				        cache: false,
+				        timeout: 5000,
+						data: data,
+				        success: function(data) {
+				           alert("success");
+				        },
+				        error: function(jqXHR, textStatus, errorThrown) {
+				            alert('error: ' + textStatus + ", " + errorThrown);
+				        }
+				    });
+                
+                });
+        });
+        </script>
+    
+    </head>
+    <body>
+    
+        <button id="getButton">get</button>
+        <button id="postButton">Post</button>
+        <div>
+        	<label>url</label><input type="text" id="urltoload" style="width:500px" value="http://bolero.ulfdavidsson.mindlier.c9.io/api/getthoughts"/>
+        </div>
+        <div>
+        	<label>data</label><input type="text" id="data" style="width:500px" value="{}"/>
+        </div>
+        <div id="result"></div>
+    </body>
+</html>

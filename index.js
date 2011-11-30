@@ -73,7 +73,7 @@ app.post('/registrate', function (req, res, next) {
 });
 
 app.get('/login', function(req, res, next) {
-  res.render('login');
+    res.render('login');
 });
 
 app.post('/login', function(req, res, next) {
@@ -93,6 +93,7 @@ app.post('/thought', function(req, res, next){
     res.redirect('back');
   });
 });
+
 
 if (process.env.PORT)
   app.listen(process.env.PORT);
