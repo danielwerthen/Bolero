@@ -6,21 +6,14 @@ var app = express.createServer();
 var io = sio.listen(app);
 var dbio = require('./dbio-v2');
 
+app.set('view engine', 'jade');
 app.use(connect.static(__dirname + '/public'));
 
-app.get('/', function (req, res, next) {
-  dbio.getDocs('thoughts', function (err, thoughts) {
-    if (err !== null) {
-      res.end();
-      return;
-    }
-    if (thoughts === undefined) {
-      res.end();
-      return;
-    }
-    res.write(JSON.stringify({ thoughts: thoughts }));
-    res.end();
-  }, {userId: "4ed38cda7617b7680a000001" });
+app.get('/', function (req, res) {
+  res.writeHead(200, {
+    'Content-Type': 'text/plain',
+	});
+  res.end('Please use SocketIO to talk to me.');
 });
 
 if (process.env.PORT)
