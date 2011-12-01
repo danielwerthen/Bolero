@@ -1,15 +1,16 @@
 <script type="text/javascript" src="/socket.io/socket.io.js"></script>
 <script>
   var socket = io.connect('http://bolero.danielwerthen.mindlier.c9.io/thoughts');
-  socket.on('connect', function() {
-    alert('on connect');
-  });
+  
   socket.on('handshake', function (data) {
     if (data.authorized === true) {
-      alert('authenticated');
+      socket.emit('getthoughts', {});
     }
     else {
       socket.emit('handshake', { username: 'danielwerthen', password: '123456' });
     }
+  });
+  socket.on('thought', function (thought) {
+    alert(JSON.stringify(thought));
   });
 </script>
