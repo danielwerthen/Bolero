@@ -4,9 +4,10 @@ var connect = require('connect');
 var MemoryStore = require('connect').session.MemoryStore;
 var dbio = require('./dbio');
 var auth = require('./authentication');
+var url = require('url');
 
 app.set('view engine', 'jade');
-app.use(connect.static(__dirname + '/apps'));
+app.use(connect.static(__dirname + '/public'));
 app.use(function (req, res, next) {
   next();
 });
@@ -35,9 +36,9 @@ var buildThought = function(title, content, user) {
 };
 
 app.post('/login', function(req, res) {
-  response.writeHead(200, {
+  res.writeHead(200, {
   	'Content-Type': 'application/json',
-		'Access-Control-Allow-Origin' : '*'
+		'Access-Control-Allow-Origin' : 'localhost:8888'
 	});
   res.end(JSON.stringify({ authorized: true }));
 });
@@ -46,7 +47,8 @@ app.get('/login', function(req, res) {
   res.end();
 });
 
-app.get('/api/getthoughts', function (req, res, next) {
+app.get('/api/getthoughts:callback?', function (req, res, next) {
+  
   dbio.getDocs('thoughts', function (err, thoughts) {
     if (err !== null) {
       res.end();
@@ -56,10 +58,27 @@ app.get('/api/getthoughts', function (req, res, next) {
       res.end();
       return;
     }
-    response.writeHead(200, {
-    'Content-Type': 'application/json',
-		'Access-Control-Allow-Origin' : '*'
-	});
+    res.writeHead(200, {
+      'Content-Type': 'jsonp'
+  	});
+    res.end(req.params.callback + '(' + JSON.stringify({ thoughts: thoughts }) + ')');
+  }, { userId: req.session.currentUser._id });
+});
+
+app.get('/api/getthoughts', function(req, res, next) {
+  dbio.getDocs('thoughts', function (err, thoughts) {
+    if (err !== null) {
+      res.end();
+      return;
+    }
+    if (thoughts === undefined) {
+      res.end();
+      return;
+    }
+    res.writeHead(200, {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin' : 'localhost2:8888'
+    });
     res.end(JSON.stringify({ thoughts: thoughts }));
   }, { userId: req.session.currentUser._id });
 });
