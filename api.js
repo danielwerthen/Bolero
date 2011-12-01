@@ -38,7 +38,7 @@ var buildThought = function(title, content, user) {
 app.post('/login', function(req, res) {
   res.writeHead(200, {
   	'Content-Type': 'application/json',
-		'Access-Control-Allow-Origin' : 'localhost:8888'
+		'Access-Control-Allow-Origin' : '*'
 	});
   res.end(JSON.stringify({ authorized: true }));
 });
@@ -77,7 +77,7 @@ app.get('/api/getthoughts', function(req, res, next) {
     }
     res.writeHead(200, {
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin' : 'localhost2:8888'
+      'Access-Control-Allow-Origin' : '*'
     });
     res.end(JSON.stringify({ thoughts: thoughts }));
   }, { userId: req.session.currentUser._id });
