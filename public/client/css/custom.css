@@ -1,0 +1,69 @@
+h3{font-size:20px; font-weight:bold;}
+
+body{padding-bottom:40px;}
+
+#maincontent{margin: 20px;}
+
+/* menu css */
+#menu{
+  z-index:100;
+  position:fixed;
+  bottom:0px;
+  border-top:1px solid #D2D2D2;
+  background-color:#ECECEC;
+  width:100%;
+	}
+	
+.menuButton{
+	width:100px;
+	margin:5px 10px 10px 10px;
+	display:inline-block;	
+	cursor: pointer; cursor: hand;	
+}
+
+.menuSelectionIndicator{
+	padding:3px;
+	border-bottom: 5px solid rgba(0, 0, 0, 0.1);
+	}
+
+.menuButton:hover .menuSelectionIndicator{
+	padding:3px;
+	border-bottom: 5px solid #B2B2B2;
+	}
+
+.menuButton:selected .menuSelectionIndicator{
+	padding:3px;
+	border-bottom: 5px solid #7F7F7F;
+	}
+	
+.menuText{
+	font-weight:bold;
+	font-size:12px;
+	font-family:Arial;
+	text-align:center;
+	margin-top:5px;
+	color:#7F7F7F;
+	}
+
+.menuButton:hover .menuText{
+	color:#3F3F3F;
+	}	
+.menuButton:selected .menuText{
+	color:#3F3F3F;
+	}
+	
+/* thought */
+.thoughtList li{
+	display: inline;
+	list-style-type: none;
+	padding-right: 20px;
+	}
+
+.thougth{display: inline;}
+
+.thougth{ 
+	width:350px;min-height:200px;
+	border:1px solid #D2D2D2;
+	margin:10px;
+		
+	}

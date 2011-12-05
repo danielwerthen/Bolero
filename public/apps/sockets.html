@@ -1,16 +1,20 @@
 <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <script>
-  var socket = io.connect('http://bolero.danielwerthen.mindlier.c9.io/thoughts');
-  
-  socket.on('handshake', function (data) {
-    if (data.authorized === true) {
-      socket.emit('getthoughts', {});
-    }
-    else {
-      socket.emit('handshake', { username: 'danielwerthen', password: '123456' });
-    }
-  });
-  socket.on('thought', function (thought) {
-    alert(JSON.stringify(thought));
+  $(function() {
+    var socket = io.connect('http://127.0.0.1:8888/thoughts');
+    
+    socket.on('handshake', function (data) {
+      if (data.authorized === true) {
+        socket.emit('getthoughts', {});
+      }
+      else {
+        socket.emit('handshake', { username: 'danielwerthen', password: '123456' });
+      }
+    });
+    socket.on('thought', function (thought) {
+      alert(JSON.stringify(thought));
+    });
+    
   });
 </script>
