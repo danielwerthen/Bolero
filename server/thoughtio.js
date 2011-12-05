@@ -16,7 +16,6 @@ function ioHandler(socket, e, callback) {
 exports = module.exports = function(db, socket) {
 
 	var getThoughts = function(filter, user) {
-		console.log('getthoughts');
 		var query = {};
     var abort = false;
     if (filter) {
@@ -37,6 +36,27 @@ exports = module.exports = function(db, socket) {
           socket.emit('thought', thought);
       });
     }
+	};
+
+	var insertThought = function(thought, user) {
+		if (thought.title && thought.content) {
+			thought.userId = user._id;
+			db.insert('thoughts', thought, function(err, result) {
+				if (!err)
+					socket.emit('insertthought', {
+						result: result
+					});
+				else
+					socket.emit('insertthought', {
+						err: 'Exception'
+					});
+			});
+		}
+		else {
+			socket.emit('insertthought', {
+				err: 'Undefined'
+			});
+		}
 	};
 
 	ioHandler(socket, 'getthoughts', getThoughts);
