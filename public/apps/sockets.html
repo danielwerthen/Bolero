@@ -16,5 +16,7 @@
       alert(JSON.stringify(thought));
     });
     
+    socket.emit('insertThought', { title: 'Test thought', content: 'I would just like to append' });
+    
   });
 </script>

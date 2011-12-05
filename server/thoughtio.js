@@ -41,6 +41,7 @@ exports = module.exports = function(db, socket) {
 	var insertThought = function(thought, user) {
 		if (thought.title && thought.content) {
 			thought.userId = user._id;
+      thought.createDate = new Date();
 			db.insert('thoughts', thought, function(err, result) {
 				if (!err)
 					socket.emit('insertthought', {
@@ -58,6 +59,13 @@ exports = module.exports = function(db, socket) {
 			});
 		}
 	};
+  
+  var insertLink = function(link, user) {
+    if (link.fromId && link.toId) {
+      
+    }
+  };
 
 	ioHandler(socket, 'getthoughts', getThoughts);
+  ioHandler(socket, 'insertThought', insertThought);
 };
