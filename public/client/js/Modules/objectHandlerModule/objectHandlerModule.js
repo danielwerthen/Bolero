@@ -6,53 +6,25 @@
 				var indexInThoughtList = 0;
 				
 				var thisWidget = this;
-				//subscribe to mediator updates
+
+
+
+                //subscribe to mediator updates
 				amplify.subscribe(thought.messages.update, function(arg){
 						
-										thisWidget.addItem(thought.messages.add,{title:"sadafdfbdfgbdfgbdfg",content:"dsdfsdfsdfdsfsddfsd"});
-				thisWidget.addItem(thought.messages.add,{title:"sadafdfbdfgbdfgbdfg",content:"dsdfsdfsdfdsfsddfsd"});
-				thisWidget.addItem(thought.messages.add,{title:"sadafdfbdfgbdfgbdfg",content:"dsdfsdfsdfdsfsddfsd"});
-				thisWidget.addItem(thought.messages.add,{title:"sadafdfbdfgbdfgbdfg",content:"dsdfsdfsdfdsfsddfsd"});
-				thisWidget.addItem(thought.messages.add,{title:"sadafdfbdfgbdfgbdfg",content:"dsdfsdfsdfdsfsddfsd"});
-				thisWidget.addItem(thought.messages.add,{title:"sadafdfbdfgbdfgbdfg",content:"dsdfsdfsdfdsfsddfsd"});
-				thisWidget.addItem(thought.messages.add,{title:"sadafdfbdfgbdfgbdfg",content:"dsdfsdfsdfdsfsddfsd"});
-				thisWidget.addItem(thought.messages.add,{title:"sadafdfbdfgbdfgbdfg",content:"dsdfsdfsdfdsfsddfsd"});
-				thisWidget.addItem(thought.messages.add,{title:"sadafdfbdfgbdfgbdfg",content:"dsdfsdfsdfdsfsddfsd"});
-				thisWidget.addItem(thought.messages.add,{title:"sadafdfbdfgbdfgbdfg",content:"dsdfsdfsdfdsfsddfsd"});
-				thisWidget.addItem(thought.messages.add,{title:"sadafdfbdfgbdfgbdfg",content:"dsdfsdfsdfdsfsddfsd"});
-				thisWidget.addItem(thought.messages.add,{title:"sadafdfbdfgbdfgbdfg",content:"dsdfsdfsdfdsfsddfsd"});
-				thisWidget.addItem(thought.messages.add,{title:"sadafdfbdfgbdfgbdfg",content:"dsdfsdfsdfdsfsddfsd"});
-				thisWidget.addItem(thought.messages.add,{title:"sadafdfbdfgbdfgbdfg",content:"dsdfsdfsdfdsfsddfsd"});
-				thisWidget.addItem(thought.messages.add,{title:"sadafdfbdfgbdfgbdfg",content:"dsdfsdfsdfdsfsddfsd"});
-						
-							
-						
-						
-						
-				//		thisWidget.addItem(thought.messages.add,{thought:objectModel.thoughts[indexInThoughtList]});	
-						//
-				//	indexInThoughtList++;	
-		/*
-				$.ajax({
-		        type: 'POST',
-		        url: 'http://bolero.ulfdavidsson.mindlier.c9.io/login',
-		        data: { username: 'udn', password: '123123123' },
-		        datatype: 'application/json',
-		        success: function(data) {
-		          if (data.authorized === true) {
-		           
-		            $.ajax({
-		              type: 'GET',
-		              url: 'http://bolero.ulfdavidsson.mindlier.c9.io/api/getthoughts',
-		              dataType: "jsonp",
-		              success: function(data) {
-		                alert(JSON.stringify(data));
-		              }
-		            });
-		          }
-		        }
-		      });		
-		*/
+                    var socket = io.connect('http://bolero.ulfdavidsson.mindlier.c9.io/thoughts');
+                        
+                        socket.on('handshake', function (data) {
+                          if (data.authorized === true) {
+                            socket.emit('getthoughts', {});
+                          }
+                          else {
+                            socket.emit('handshake', { username: 'danielwerthen', password: '123456' });
+                          }
+                        });
+                        socket.on('thought', function (recievedthought) {
+                          thisWidget.addItem(thought.messages.add,recievedthought);
+                        });			
 				});
 				
 				amplify.subscribe(thought.messages.create, function(arg){

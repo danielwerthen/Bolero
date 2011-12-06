@@ -7,7 +7,7 @@
 			_create: function() {
 				
 				var thisWidget = this;
-				var list = create('ul').addClass("thoughtList");
+				var list = create('div').addClass("thoughtList");
 				
 				
 				//subscribe to mediator updates
@@ -23,18 +23,8 @@
 	
 			ItemAdded: function(list, thought) { 
 
-					var thoughtVisual = create("div").addClass("thougth");
-					thoughtVisual.data("Tag",thought);
-					thoughtVisual.append(create("h3").text(thought.title));
-					thoughtVisual.append(create("p").text(thought.content));
-					//thoughtVisual.append(create("p").text(thought.user.firstname+ " " + thought.user.lastname).addClass("user"));
-	/*				for(var _linking = 0; _linking < thought.linkings.length; _linking++)
-					{
-							thoughtVisual.append(create("p").text(thought.linkings[_linking].id).addClass("linking"));
-					}
-	*/
-		
-				list.append(create('li').append(thoughtVisual));
+				var thoughtVisual = create("div").thoughtModule({"thought":thought});
+				list.append(thoughtVisual);
 					 					 
 			},	
 			

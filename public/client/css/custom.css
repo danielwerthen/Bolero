@@ -53,15 +53,13 @@ body{padding-bottom:40px;}
 	}
 	
 /* thought */
-.thoughtList li{
-	display: inline;
-	list-style-type: none;
+
+.thoughtList {height:230px;}
+
+.thoughtList .thougth{
+	display: inline-block;
 	padding-right: 20px;
-	}
 
-.thougth{display: inline;}
-
-.thougth{ 
 	width:350px;min-height:200px;
 	border:1px solid #D2D2D2;
 	margin:10px;
