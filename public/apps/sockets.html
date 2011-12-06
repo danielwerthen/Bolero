@@ -6,7 +6,7 @@
     
     socket.on('handshake', function (data) {
       if (data.authorized === true) {
-        socket.emit('getthoughts', {});
+        socket.emit('getthoughts', { thoughtId: "hello"});
       }
       else {
         socket.emit('handshake', { username: 'danielwerthen', password: '123456' });
@@ -14,6 +14,9 @@
     });
     socket.on('thought', function (thought) {
       alert(JSON.stringify(thought));
+    });
+    socket.on('getthoughts', function (data) {
+      alert(JSON.stringify(data));
     });
     
     socket.emit('insertThought', { title: 'Test thought', content: 'I would just like to append' });

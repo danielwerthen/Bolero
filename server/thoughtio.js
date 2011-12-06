@@ -1,7 +1,7 @@
 function ioHandler(socket, e, callback) {
 	socket.on(e, function(data) {
 		socket.get('user', function(err, user) {
-			if (!err) {
+			if (!err && user) {
 				callback(data, user)
 			}
 			else {
@@ -29,11 +29,25 @@ exports = module.exports = function(db, socket) {
       }
       else
         query.userId = user._id.toString();
+       if (filter.thoughtId !== undefined) {
+       	if (typeof filter.thoughtId == 'string')
+       		query._id = filter.thoughtId;
+       	else if (filter.thoughtId.toString !== undefined)
+       		query._id = filter.thoughtId.toString();
+       	else
+       		abort = true;
+       }
     }
     if (!abort) {
-      db.foreach('thoughts', { userId: user._id.toString() }, function (err, thought) {
+      db.foreach('thoughts', query, function (err, thought) {
         if (!err && thought !== null)
           socket.emit('thought', thought);
+        else if (err) {
+        	socket.emit('getthoughts', { err: 'Failed' });	
+        }
+        else {
+        	socket.emit('getthoughts', { result: null });
+        }
       });
     }
 	};
