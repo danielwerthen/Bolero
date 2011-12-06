@@ -12,7 +12,7 @@ $.widget( "TestNamespace.timelineModule", {
 		var canvas = create("canvas");
 	
 		//subscribe to mediator updates
-		amplify.subscribe(thought.messages.add, function(arg){
+		amplify.subscribe(messages.thought.add, function(arg){
 			thisWidget.ItemAdded(canvas,arg.thought);		
 		});
 		

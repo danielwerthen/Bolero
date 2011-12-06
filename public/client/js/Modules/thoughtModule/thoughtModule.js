@@ -2,26 +2,40 @@ $.widget( "TestNamespace.thoughtModule", {
     // default options
 	options: {
 		o: null,
-        thought: {},
         thoughtId: -1
 		},
 
 	// the constructor
 	_create: function() {
 	//amplify getthought?id
-		this.element.addClass("thougth");
-					this.element.append(create("h3").text(this.options.thought.title));
-					this.element.append(create("p").text(this.options.thought.content));
+    
+    var thisWidget = this;
+    
+	    var thoughtVisual = this.element.addClass("thougth");
+		
+            amplify.subscribe(messages.thought.update+"?"+thisWidget.options.thoughtId, function(thought){
+					
+                    thisWidget.thought = thought;
+                                       
+                    thoughtVisual.append(create("h3").text(thisWidget.thought.title));
+    				thoughtVisual.append(create("p").text(thisWidget.thought.content));
 					//thoughtVisual.append(create("p").text(thought.user.firstname+ " " + thought.user.lastname).addClass("user"));
 	/*				for(var _linking = 0; _linking < thought.linkings.length; _linking++)
 					{
 							thoughtVisual.append(create("p").text(thought.linkings[_linking].id).addClass("linking"));
 					}
 	*/
+            
+				});
+        
+        
+             amplify.publish(messages.thought.get, thisWidget.options.thoughtId);   
+
 		
 			
 		this._refresh();
 	},
+    thought: {},
 	// called when created, and later when changing options
 	_refresh: function() {
 		

@@ -7,42 +7,71 @@
 				
 				var thisWidget = this;
 
-
+                var socket = io.connect('http://bolero.ulfdavidsson.mindlier.c9.io/thoughts');
+                socket.on('handshake', function (data) {
+                    if (data.authorized === false) 
+                    {
+                        amplify.publish(interface.messages.openLoginView, {});
+                        amplify.subscribe(interface.messages.login, function(loginobject){		
+                             socket.emit('handshake', loginobject);
+                             //socket.emit('getusers', {"username": loginobject.username});
+                             
+        				});
+                    }
+                });        
+                      
+                socket.on('thought', function (recievedthought) {
+                    thisWidget.addThought(recievedthought);
+                });   
+                
+                socket.on('user', function (recievedthought) {
+                   var i = 0;
+                });    
 
                 //subscribe to mediator updates
-				amplify.subscribe(thought.messages.update, function(arg){
-						
-                    var socket = io.connect('http://bolero.ulfdavidsson.mindlier.c9.io/thoughts');
-                        
-                        socket.on('handshake', function (data) {
-                          if (data.authorized === true) {
-                            socket.emit('getthoughts', {});
-                          }
-                          else {
-                            socket.emit('handshake', { username: 'danielwerthen', password: '123456' });
-                          }
-                        });
-                        socket.on('thought', function (recievedthought) {
-                          thisWidget.addItem(thought.messages.add,recievedthought);
-                        });			
+				amplify.subscribe(messages.thought.update, function(arg){
+					//TODO: replace with real use of server connection	
+                    socket.emit('getthoughts', {});      
 				});
 				
-				amplify.subscribe(thought.messages.create, function(arg){
+				amplify.subscribe(messages.thought.create, function(thought){
 					
 				//	alert("not done");
 					//1. ajax call to add to server. this shuld return te real object when done
 					//2. add real object to thoughts list
 					//3. sen added call via mediator
-			
-					thisWidget.addItem(thought.messages.add,arg);
+			        socket.emit('insertthought', thought);
+					//thisWidget.addThought(arg);
 					});
 		
+            	amplify.subscribe(messages.thought.get, function(thoughtId){
+					
+                    var thought = thisWidget.objectModel.thoughts[thoughtId];
+                    
+                    if(thought === undefined)
+                    {
+                        socket.emit('getthoughts', { _id: thoughtId}); 
+                       
+                    }
+                    
+			        amplify.publish(messages.thought.update+"?"+thoughtId, thought);
+            
+				});
+        
 				this._refresh();
 			},
-	
-			addItem: function(message, arg) { 
+            
+            objectModel : {
+                users : [],
+	            thoughts: [],
+	            linkings : [],
+	            linkingTypes : []	
+            },
+			addThought: function(thought) { 
 					 
-					 amplify.publish(message, arg );
+                     this.objectModel.thoughts[thought._id] = thought;
+                     
+					 amplify.publish(messages.thought.add, thought._id );
 					 
 				},	
 			

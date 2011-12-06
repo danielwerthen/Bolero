@@ -1,4 +1,4 @@
-    $.widget( "TestNamespace.createThoughtModule", {
+    $.widget( "TestNamespace.loginModule", {
 			// default options
 			options: {
 			},
@@ -8,20 +8,20 @@
 				
 				var thisWidget = this;
 				
-				var createFormContainer = create("div","createFormContainer");
-				createFormContainer.attr("title","Create Thought");
+				var loginFormContainer = create("div","loginFormContainer");
+				loginFormContainer.attr("title","Login");
 				
 				var thoughtForm = create("form").append(create("fieldset"));
 				
-				thoughtForm.append(create("label").attr({"for":"title"}).text("title"));
-				thoughtForm.append(create("input").attr({"type":"text","name":"title","id":"title"}).addClass('text ui-widget-content ui-corner-all').width("100%"));
+				thoughtForm.append(create("label").attr({"for":"username"}).text("username"));
+				thoughtForm.append(create("input").attr({"type":"text","name":"username","id":"username"}).addClass('text ui-widget-content ui-corner-all').width("100%"));
 				
-				thoughtForm.append(create("label").attr({"for":"content"}).text("content"));
-    			thoughtForm.append(create("textarea").attr({"name":"content","id":"content"}).addClass('text ui-widget-content ui-corner-all').width("100%"));
+				thoughtForm.append(create("label").attr({"for":"content"}).text("password"));
+    			thoughtForm.append(create("input").attr({"type":"password","name":"password","id":"password"}).addClass('text ui-widget-content ui-corner-all').width("100%"));
 					
-				createFormContainer.append(thoughtForm);
+				loginFormContainer.append(thoughtForm);
 				
-		createFormContainer.dialog({
+		loginFormContainer.dialog({
 			autoOpen: false,
 			height: 300,
 			width: 500,
@@ -33,26 +33,23 @@
 				
 					},
 			buttons: {
-				"Create Thought": function() 
+				"Login": function() 
 				{
-					var thoughtobject = {"title":$("#title").val(),"content":$("#content").val()};
+					var loginobject = {"username":$("#username").val(),"password":$("#password").val()};
 					
-						 amplify.publish(messages.thought.create, thoughtobject );
-						 thoughtobject = null;
-						 $("#title").val("");
-						 $("#content").val("");
+						 amplify.publish(interface.messages.login, loginobject );
+						 loginobject = null;
+						 $("#username").val("");
+						 $("#password").val("");
 						 $(this).dialog("close"); 
 				},
-                "Cancel": function(){
-                    $(this).dialog("close"); 
-                    }
 			},
 		});
 				
 				
-				amplify.subscribe(interface.messages.openCreateView, function(arg){
+				amplify.subscribe(interface.messages.openLoginView, function(arg){
 						
-						createFormContainer.dialog("open");
+						loginFormContainer.dialog("open");
 							
 				});
 					

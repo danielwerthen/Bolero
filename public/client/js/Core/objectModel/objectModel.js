@@ -1,120 +1,43 @@
-/*
-var objectModel = (function(){
-		var _privateObjectModel = {
-			channels: {},
-			subscribe : function(channel, fn){
-				if (!this.channels[channel]) this.channels[channel] = [];
-				this.channels[channel].push({ context: this, callback: fn });
-			},
-		 
-			publish : function(channel){
-				if (!_privateCoreMediator.channels[channel]) return false;
-				var args = Array.prototype.slice.call(arguments, 1);
-				for (var i = 0, l = _privateCoreMediator.channels[channel].length; i < l; i++) {
-					var subscription = _privateCoreMediator.channels[channel][i];
-					subscription.callback.apply(subscription.context, args);
-				}
-			}
-		};
-	 
-		return {
-			 subscribe: function(args) {
-				return _privateCoreMediator.subscribe(args.channel,args.callback);
-			},
+var             objectModel = {
+                users : [],
+                thoughts: [],
+	            linkings : [],
+	            linkingTypes : []	
+            };
 
-			publish: function() {
-				return _privateCoreMediator.publish(arguments[0].channel,arguments[0]);
-			 }		
-		}
-	}());*/
-
-	
-var objectModel = {
-	users : Array(),
-	thoughts: Array(),
-	linkings : Array(),
-	linkingTypes : Array()	
-	 
-};
-
-
-
-var user = {
-	messages:{
+var messages = {
+    user : {
 		add:"user.add",
+        get:"user.get",
 		remove:"user.remove",
 		create:"user.create",
-		update:"user.update"}
-	};
+		update:"user.update"
+	},
 
-var thought = {
-	messages:{
+    thought : {
 		add:"thought.add",
+        get:"thought.get",
 		remove:"thougth.remove",
 		create:"thougth.create",
-		update:"thougth.update"}
-	};
+		update:"thougth.update"
+	},
 	
-var link = {
-	messages:{
+    link : {
 		add:"link.add",
+        get:"link.get",
 		remove:"link.remove",
 		create:"link.create",
-		update:"link.update"}
-	};
-
-var linkType = {
-	messages:{
+		update:"link.update"
+	},
+    linkType : {
 		add:"linkType.add",
+        get:"linkType.get",
 		remove:"linkType.remove",
 		create:"linkType.create",
-		update:"linkType.update"}
-	};
-	/*
-	newUser: function(){ 
-		return {   
-			_id : {   $oid : null   },   
-			id : null,   
-			email : null, 
-			firstname:null, 
-			lastname:null
-		};
-	},
-	newThought: function(){ 
-		return{   
-			_id : {   $oid : null   },   
-			id : null,   
-			user : {id:null}, 
-			title:null, 
-			content:null,
-			created:'0001-01-01 00:00:00'
-		};
-	},
-	newLinking: function(){ 
-		return {  
-			_id : {   $oid : null   },   
-			id : null,   
-			user : {id:null}, 
-			linkingType: {id:null}, 
-			fromObject: {id:null}, 
-			toObject: {id:null}, 
-			created:'0001-01-01 00:00:00'
-		};
-	},
-	newLinkingType:function(){ 
-		return {
-			_id : {   $oid : null  },   
-			id : null, 
-			name:null
-		};
+		update:"linkType.update"
 	}
+    };
 
-	*/
-	
-	
-	
-	
-	
 	
 //Users
 	function addUser(userObjectToAdd)
@@ -130,13 +53,16 @@ var linkType = {
 	function addThought(thoughtObjectToAdd)
 	{
 
-		thoughtObjectToAdd.user = getUser(thoughtObjectToAdd.user.id)
-		thoughtObjectToAdd.linkings = getLinkingsForFromObject(thoughtObjectToAdd.id);
-		objectModel.thoughts.push(thoughtObjectToAdd);
+	//	thoughtObjectToAdd.user = getUser(thoughtObjectToAdd.user.id)
+	//	thoughtObjectToAdd.linkings = getLinkingsForFromObject(thoughtObjectToAdd.id);
+//		objectModel.thoughts.push(thoughtObjectToAdd);
+        objectModel.thoughts[thoughtObjectToAdd._id] = thoughtObjectToAdd;
 	}
 	function getThought(id)
 	{
-		return findById(objectModel.thoughts, id);
+        var thought = objectModel.thoughts[id];
+		//return findById(objectModel.thoughts, id);
+        return thought;
 	}
 
 //Linkings

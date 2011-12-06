@@ -1,8 +1,9 @@
 //load external Libraries
 $(function(){
 	
-	$("#menu").menuModule();
 	var objectHandler = create("div").objectHandlerModule();
+    var loginDialog = create("div").loginModule();
+    $("#menu").menuModule();
 	$(".list").listThoughtModule();
 	var createDialog = create("div").createThoughtModule();
 	

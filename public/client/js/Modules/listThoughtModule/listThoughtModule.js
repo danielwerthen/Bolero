@@ -11,9 +11,9 @@
 				
 				
 				//subscribe to mediator updates
-				amplify.subscribe(thought.messages.add, function(arg){
+				amplify.subscribe(messages.thought.add, function(thoughtId){
 								
-								thisWidget.ItemAdded(list,arg);		
+								thisWidget.ItemAdded(list,thoughtId);		
 				});
 				
 				this.element.append(list);
@@ -21,9 +21,9 @@
 				this._refresh();
 			},
 	
-			ItemAdded: function(list, thought) { 
+			ItemAdded: function(list, thoughtId) { 
 
-				var thoughtVisual = create("div").thoughtModule({"thought":thought});
+				var thoughtVisual = create("div").thoughtModule({"thoughtId":thoughtId});
 				list.append(thoughtVisual);
 					 					 
 			},	

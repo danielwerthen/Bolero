@@ -2,6 +2,8 @@ document.write("<script src='js/Modules/settings.js'><\/script>");
 
 document.write("<script src='js/Modules/messages.js'><\/script>");
 //register modules
+
+document.write("<script src='js/Modules/loginModule/loginModule.js'><\/script>");
 document.write("<script src='js/Modules/thoughtModule/thoughtModule.js'><\/script>");
 
 document.write("<script src='js/Modules/menuModule/menuModule.js'><\/script>");

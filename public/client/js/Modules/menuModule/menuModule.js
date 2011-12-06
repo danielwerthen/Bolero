@@ -8,7 +8,7 @@ $.widget( "TestNamespace.menuModule", {
 	_create: function() {
 					
 		var submitButton = this.newMenuItem("Load", function() { 
-			amplify.publish(thought.messages.update);
+			amplify.publish(messages.thought.update);
 		});
 
 		var createButton = this.newMenuItem("Create", function() { 
