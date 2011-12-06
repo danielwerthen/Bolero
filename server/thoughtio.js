@@ -14,72 +14,97 @@ function ioHandler(socket, e, callback) {
 }
 
 exports = module.exports = function(db, socket) {
-
-	var getThoughts = function(filter, user) {
-		var query = {};
-    var abort = false;
-    if (filter) {
-      if (filter.userId !== undefined) {
-        if (typeof filter.userId == 'string')
-          query.userId = filter.userId;
-        else if (filter.userId.toString !== undefined)
-          query.userId = filter.userId.toString();
-        else
-          abort = true;
-      }
-      else
-        query.userId = user._id.toString();
-       if (filter.thoughtId !== undefined) {
-       	if (typeof filter.thoughtId == 'string')
-       		query._id = filter.thoughtId;
-       	else if (filter.thoughtId.toString !== undefined)
-       		query._id = filter.thoughtId.toString();
-       	else
-       		abort = true;
-       }
-    }
-    if (!abort) {
-      db.foreach('thoughts', query, function (err, thought) {
-        if (!err && thought !== null)
-          socket.emit('thought', thought);
-        else if (err) {
-        	socket.emit('getthoughts', { err: 'Failed' });	
-        }
-        else {
-        	socket.emit('getthoughts', { result: null });
+  
+  socket.on('insertuser', function (user) {
+    if (user.username && user.password && user.email) {
+      user.createDate = new Date();
+      db.insert('users', user, function(err, result) {
+        if (!err) {
+          delete result.password;
+          socket.emit('insertuser', result);
         }
       });
     }
+  });
+  
+  var getUsers = function (filter, current) {
+    db.foreach('users', filter, function (err, user) {
+      if (!err && u !== null)
+        socket.emit('user', user);
+    });
+  };
+  
+	var getThoughts = function (filter, user) {
+		db.foreach('thoughts', filter, function (err, thought) {
+      if (!err && thought !== null)
+        socket.emit('thought', thought);
+    });
 	};
 
 	var insertThought = function(thought, user) {
 		if (thought.title && thought.content) {
-			thought.userId = user._id;
+			thought.userId = user._id.toString();
       thought.createDate = new Date();
 			db.insert('thoughts', thought, function(err, result) {
-				if (!err)
-					socket.emit('insertthought', {
-						result: result
-					});
-				else
-					socket.emit('insertthought', {
-						err: 'Exception'
-					});
-			});
-		}
-		else {
-			socket.emit('insertthought', {
-				err: 'Undefined'
+				if (!err) {
+					socket.emit('insertthought', result[0]);
+				}
+				else {
+					console.log('added thought');
+				}
 			});
 		}
 	};
   
-  var insertLink = function(link, user) {
+  var insertLink = function (link, user) {
     if (link.fromId && link.toId) {
-      
+      link.userId = user._id.toString();
+      link.createDate = new Date();
+      db.insert('links', link, function(err, result) {
+        if (!err) {
+          socket.emit('insertlink', result);
+        }
+        else {
+          console.log('added link');
+        }
+      });
     }
   };
+  
+  var getLinks = function (filter, user) {
+    console.log('getlinks ' + JSON.stringify(filter));
+    db.foreach('links', filter, function (err, thought) {
+      if (!err && thought !== null)
+        socket.emit('link', thought);
+    });
+  };
+  
+  var getLinkedThoughts = function (from, to) {
+    return function (filter, currentUser) {
+      if (filter.thoughtId) {
+        var query = { from: filter.thoughtId };
+        db.foreach('links', query, function (err, link) {
+          if (!err && link) {
+            db.foreach('thoughts', { _id: link[to] }, function (err, thought) {
+              if (!err && thought) {
+                thought.link = link;
+                socket.emit('thought', thought);
+              }
+            });
+          }
+        });
+      }
+    };
+  };
+  
+  var getForwardThoughts = getLinkedThoughts('fromId', 'toId');
+  var getBackwardThoughts = getLinkedThoughts('toId', 'fromId');
 
+  ioHandler(socket, 'getusers', getUsers);
 	ioHandler(socket, 'getthoughts', getThoughts);
-  ioHandler(socket, 'insertThought', insertThought);
+  ioHandler(socket, 'insertthought', insertThought);
+  ioHandler(socket, 'getlinks', getLinks);
+  ioHandler(socket, 'insertlink', insertLink);
+  ioHandler(socket, 'getforwardthoughts', getForwardThoughts);
+  ioHandler(socket, 'getbackwardthoughts', getBackwardThoughts);
 };

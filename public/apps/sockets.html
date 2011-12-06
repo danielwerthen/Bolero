@@ -2,24 +2,73 @@
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <script>
   $(function() {
-    var socket = io.connect('http://127.0.0.1:8888/thoughts');
+    var socket = io.connect('http://' + document.domain + '/thoughts'),
+        thoughtCache = { count: 0},
+        parentThought = null,
+        childOneThought = null,
+        childTwoThought = null;
     
     socket.on('handshake', function (data) {
       if (data.authorized === true) {
-        socket.emit('getthoughts', { thoughtId: "hello"});
+        //socket.emit('getthoughts', {});
+    
+        socket.emit('insertthought', { title: 'Parent thought', content: 'This is the root node' });
+        socket.emit('insertthought', { title: 'Child thought 1', content: 'This is the child node 1' });
+        socket.emit('insertthought', { title: 'Child thought 2', content: 'This is the child node 2' });
       }
       else {
         socket.emit('handshake', { username: 'danielwerthen', password: '123456' });
       }
     });
     socket.on('thought', function (thought) {
-      alert(JSON.stringify(thought));
-    });
-    socket.on('getthoughts', function (data) {
-      alert(JSON.stringify(data));
+      if (thoughtCache[thought._id.toString()] === undefined) {
+        thoughtCache[thought._id.toString()] = thought;
+        thoughtCache.count++;
+      }
+      if (thought.title == 'Parent thought')
+        parentThought = thought;
+      if (thought.title == 'Child thought 1')
+        parentThought = thought;
+      if (thought.title == 'Child thought 2')
+        parentThought = thought;
+      if (thoughtCache.count == 3) {
+        insertLinks();
+      }
     });
     
-    socket.emit('insertThought', { title: 'Test thought', content: 'I would just like to append' });
+    socket.on('insertthought', function (thought) {
+      if (thoughtCache[thought._id.toString()] === undefined) {
+        thoughtCache[thought._id.toString()] = thought;
+        thoughtCache.count++;
+      }
+      if (thought.title == 'Parent thought')
+        parentThought = thought;
+      if (thought.title == 'Child thought 1')
+        childOneThought = thought;
+      if (thought.title == 'Child thought 2')
+        childTwoThought = thought;
+      if (thoughtCache.count == 3) {
+        insertLinks();
+      }
+    });
+    
+    var insertLinks = function () {
+      socket.emit('insertlink', { fromId: parentThought._id.toString(), toId: childOneThought._id.toString() });
+      socket.emit('insertlink', { fromId: parentThought._id.toString(), toId: childTwoThought._id.toString() });
+    }
+    
+    var linkCount = 0;
+    socket.on('insertlink', function (thought) {
+      linkCount++;
+      if (linkCount == 2) {
+        socket.emit('getlinks', { fromId: parentThought._id.toString() });
+      }
+    });
+    
+    socket.on('link', function (link) {
+      $('#result').append('<p>' + thoughtCache[link.fromId.toString()].title + ' links to ' + thoughtCache[link.toId.toString()].title + '</p>');
+    });
     
   });
 </script>
+<div id="result"></div>
