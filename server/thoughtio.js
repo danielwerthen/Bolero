@@ -1,20 +1,30 @@
+var dbio = require('../dbio-v2');
 function ioHandler(socket, e, callback) {
-	socket.on(e, function(data) {
-		socket.get('user', function(err, user) {
-			if (!err && user) {
-				callback(data, user)
-			}
-			else {
-				socket.emit(e, {
-					authorized: false
-				});
-			}
-		});
-	});
+  
+  if (socket.handshake && socket.handshake.session) {
+    socket.on(e, function (data) {
+      console.log(e + ': ' + JSON.stringify(data));
+      callback(data, socket.handshake.session.currentUser);
+    });
+  }
+  else {
+    socket.on(e, function(data) {
+      console.log(e + '= ' + JSON.stringify(data));
+      socket.get('user', function(err, user) {
+        if (!err && user) {
+          callback(data, user);
+        }
+        else {
+          socket.emit(e, {
+            authorized: false
+          });
+        }
+      });
+    });
+  }
 }
 
-exports = module.exports = function(db, socket) {
-  
+function initialize(db, socket) {
   socket.on('insertuser', function (user) {
     if (user.username && user.password && user.email) {
       user.createDate = new Date();
@@ -34,7 +44,7 @@ exports = module.exports = function(db, socket) {
     });
   };
   
-	var getThoughts = function (filter, user) {
+  var getThoughts = function (filter, user) {
 		db.foreach('thoughts', filter, function (err, thought) {
       if (!err && thought !== null)
         socket.emit('thought', thought);
@@ -107,4 +117,19 @@ exports = module.exports = function(db, socket) {
   ioHandler(socket, 'insertlink', insertLink);
   ioHandler(socket, 'getforwardthoughts', getForwardThoughts);
   ioHandler(socket, 'getbackwardthoughts', getBackwardThoughts);
+}
+
+exports = module.exports = function(db, socket) {
+  if (!db) {
+    dbio(function(err, db) {
+      if (err || db === null) {
+        console.log('failed to open BoleroDb : ' + db);
+        return;
+      }
+      initialize(db, socket);
+    });
+  }
+  else {
+    initialize(db, socket);
+  }
 };

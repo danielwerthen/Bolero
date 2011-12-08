@@ -1,23 +1,24 @@
 function initSocket(thisWidget) {
   console.log('connecting to ' + document.domain);
-  var socket = io.connect('http://' + document.domain + '/thoughts');
-  socket.on('connect', function () {
+  var sio
+  = io.connect('http://' + document.domain + '/thoughts');
+  sio.on('connect', function () {
     console.log('connected');
-    socket.on('thought', function (recievedthought) {
+    sio.on('thought', function (recievedthought) {
         thisWidget.addThought(recievedthought);
     });   
     
-    socket.on('user', function (recievedthought) {
+    sio.on('user', function (recievedthought) {
        var i = 0;
     }); 
 
     //subscribe to mediator updates
     amplify.subscribe(messages.thought.update, function(arg){
-  		socket.emit('getthoughts', {});      
+  		sio.emit('getthoughts', {});      
   	});
   	
   	amplify.subscribe(messages.thought.create, function(thought){
-      socket.emit('insertthought', thought);
+      sio.emit('insertthought', thought);
   	});
   
 
@@ -25,28 +26,23 @@ function initSocket(thisWidget) {
       var thought = thisWidget.objectModel.thoughts[thoughtId];
       if(thought === undefined)
       {
-        socket.emit('getthoughts', { _id: thoughtId});
+        sio.emit('getthoughts', { _id: thoughtId});
       }  
       amplify.publish(messages.thought.update+"?"+thoughtId, thought);
   	});
   });
-  socket.on('error', function (error) {
+  sio.on('error', function (error) {
     console.log('connection failed due to ' + error);
     if (error == 'handshake error') {
       amplify.publish(interface.messages.openLoginView, {});
     }
     else {
       setTimeout(function () {
-        socket.socket.connect();
+        sio.socket.connect();
       }, 500);
     }
   });
-  socket.socket.on('error', function (error) {
-    console.log('socket failed due to ' + error);
-  });
-  socket.socket.on('connect', function () {
-    console.log('socket is connected');
-  });
+  return sio;
 }
   
   
@@ -66,13 +62,13 @@ function initSocket(thisWidget) {
               datatype: 'json',
               success: function (result) {
                 if (result.authorized)
-                  location.reload();
+                  setTimeout(function () { sio.socket.connect(); }, 500);
                 else
                   amplify.publish(interface.messages.openLoginView, {});
               }
             });
         });
-        initSocket(thisWidget);
+        var sio = initSocket(thisWidget);
         
 				this._refresh();
 			},

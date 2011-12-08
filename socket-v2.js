@@ -6,7 +6,8 @@ var io = require('socket.io'),
 		sessionStore = new MemoryStore(),
 		Session = require('connect').middleware.session.Session,
 		parseCookie = require('connect').utils.parseCookie,
-    auth = require('./server/auth-v2');
+    auth = require('./server/auth-v2'),
+    tio = require('./server/thoughtio');
 
 
 app.configure(function () {
@@ -73,6 +74,8 @@ sio.of('/thoughts').on('connection', function (socket) {
 			hs.session.touch().save();
 		});
 	}, 60 * 1000);
+  
+  tio(null, socket);
 
 	socket.on('disconnect', function () {
 		console.log('A socket with sessionID ' + hs.sessionID + ' disconnected!');
