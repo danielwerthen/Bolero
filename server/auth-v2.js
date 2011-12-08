@@ -25,6 +25,7 @@ exports.post = function (req, res) {
             fail(res);
           }
           else {
+            console.log('connected user through login');
             req.session.currentUser = user[0];
             req.session.auth = true;
             approve(res);

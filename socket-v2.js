@@ -47,11 +47,14 @@ sio.set('authorization', function (data, accept) {
 		data.sessionStore = sessionStore;
 		sessionStore.get(data.sessionID, function (err, session) {
 			if (err || !session) {
-				accept('Unauthorized', false);
+				accept('unauthorized', false);
 			}
 			else {
 				data.session = new Session(data, session);
-				accept(null, true);
+        if (session.currentUser && session.auth)
+				  accept(null, true);
+        else
+          accept('unauthorized', false);
 			}
 		});
 	}

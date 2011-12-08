@@ -36,8 +36,16 @@ function initSocket(thisWidget) {
       amplify.publish(interface.messages.openLoginView, {});
     }
     else {
-      location.reload();
+      setTimeout(function () {
+        socket.socket.connect();
+      }, 500);
     }
+  });
+  socket.socket.on('error', function (error) {
+    console.log('socket failed due to ' + error);
+  });
+  socket.socket.on('connect', function () {
+    console.log('socket is connected');
   });
 }
   
