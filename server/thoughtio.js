@@ -2,17 +2,17 @@ var dbio = require('../dbio-v2');
 function ioHandler(socket, e, callback) {
   
   if (socket.handshake && socket.handshake.session) {
-    socket.on(e, function (data) {
+    socket.on(e, function (data, fn) {
       console.log(e + ': ' + JSON.stringify(data));
-      callback(data, socket.handshake.session.currentUser);
+      callback(data, socket.handshake.session.currentUser, fn);
     });
   }
   else {
-    socket.on(e, function(data) {
+    socket.on(e, function(data, fn) {
       console.log(e + '= ' + JSON.stringify(data));
       socket.get('user', function(err, user) {
         if (!err && user) {
-          callback(data, user);
+          callback(data, user, fn);
         }
         else {
           socket.emit(e, {
@@ -44,7 +44,15 @@ function initialize(db, socket) {
     });
   };
   
+  var sendThoughts = function (filter, user, callback) {
+    db.toArray('thoughts', filter, function (err, thoughts) {
+      if (!err && thoughts)
+        callback(thoughts);
+    });
+  };
+  
   var getThoughts = function (filter, user) {
+    if (filter === null) filter = { userId: user._id.toString() };
 		db.foreach('thoughts', filter, function (err, thought) {
       if (!err && thought !== null)
         socket.emit('thought', thought);
@@ -112,6 +120,7 @@ function initialize(db, socket) {
 
   ioHandler(socket, 'getusers', getUsers);
 	ioHandler(socket, 'getthoughts', getThoughts);
+  ioHandler(socket, 'sendthoughts', sendThoughts);
   ioHandler(socket, 'insertthought', insertThought);
   ioHandler(socket, 'getlinks', getLinks);
   ioHandler(socket, 'insertlink', insertLink);

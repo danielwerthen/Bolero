@@ -4,13 +4,20 @@
 	$(function () {
     
 		var sio = io.connect('http://' + document.domain + '/thoughts');
-		sio.socket.on('connect', function (data) {
+		sio.on('connect', function (data) {
+      sio.emit('sendthoughts', {}, function(result) {
+          console.log(1);
+        });
+      sio.on('thought', function (data) {
+        console.log(JSON.stringify(data));
+      });
+      sio.emit('getthoughts', null);
 			console.log('connected');
 		});
-    sio.socket.on('disconnect', function () {
+    sio.on('disconnect', function () {
       console.log('connection closed');
     });
-    sio.socket.on('error', function (error){
+    sio.on('error', function (error){
       console.log('Unable to connect Socket.IO', JSON.stringify(error));
       if (error == 'handshake error') {
         $.ajax({
