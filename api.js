@@ -2,7 +2,7 @@ var express = require('express');
 var app = express.createServer();
 var connect = require('connect');
 var MemoryStore = require('connect').session.MemoryStore;
-var dbio = require('./dbio');
+var dbio = require('./dbio-v2');
 var auth = require('./authentication');
 var url = require('url');
 

@@ -51,7 +51,7 @@
 			"file": "server/thoughtio.js",
 			"settings":
 			{
-				"buffer_size": 1418,
+				"buffer_size": 2048,
 				"line_ending": "Windows"
 			}
 		},
@@ -59,7 +59,7 @@
 			"file": "public/apps/sockets.html",
 			"settings":
 			{
-				"buffer_size": 633,
+				"buffer_size": 848,
 				"line_ending": "Windows"
 			}
 		},
@@ -180,6 +180,7 @@
 	"groups":
 	[
 		{
+			"selected": 4,
 			"sheets":
 			[
 				{
@@ -256,7 +257,9 @@
 						],
 						"settings":
 						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -297,15 +300,15 @@
 					"file": "server/thoughtio.js",
 					"settings":
 					{
-						"buffer_size": 1418,
+						"buffer_size": 2048,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1276,
-								1276
+								1295,
+								1295
 							]
 						],
 						"settings":
@@ -313,7 +316,7 @@
 							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 240.0,
+						"translation.y": 360.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -323,15 +326,15 @@
 					"file": "public/apps/sockets.html",
 					"settings":
 					{
-						"buffer_size": 633,
+						"buffer_size": 848,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								414,
-								414
+								413,
+								413
 							]
 						],
 						"settings":

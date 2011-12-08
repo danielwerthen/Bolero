@@ -1,5 +1,5 @@
 var url = require('url');
-var db = require('./dbio');
+var db = require('./dbio-v2');
 
 exports = module.exports = function authentication(options){
   options = options || {};

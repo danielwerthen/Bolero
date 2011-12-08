@@ -7,7 +7,7 @@
 				
 				var thisWidget = this;
 
-                var socket = io.connect('http://bolero.ulfdavidsson.mindlier.c9.io/thoughts');
+                var socket = io.connect('http://' + document.domain + '/thoughts');
                 socket.on('handshake', function (data) {
                     if (data.authorized === false) 
                     {
