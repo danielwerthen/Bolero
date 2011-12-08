@@ -1,4 +1,48 @@
-	$.widget( "TestNamespace.objectHandlerModule", {
+function initSocket(thisWidget) {
+  console.log('connecting to ' + document.domain);
+  var socket = io.connect('http://' + document.domain + '/thoughts');
+  socket.on('connect', function () {
+    console.log('connected');
+    socket.on('thought', function (recievedthought) {
+        thisWidget.addThought(recievedthought);
+    });   
+    
+    socket.on('user', function (recievedthought) {
+       var i = 0;
+    }); 
+
+    //subscribe to mediator updates
+    amplify.subscribe(messages.thought.update, function(arg){
+  		socket.emit('getthoughts', {});      
+  	});
+  	
+  	amplify.subscribe(messages.thought.create, function(thought){
+      socket.emit('insertthought', thought);
+  	});
+  
+
+    amplify.subscribe(messages.thought.get, function(thoughtId){
+      var thought = thisWidget.objectModel.thoughts[thoughtId];
+      if(thought === undefined)
+      {
+        socket.emit('getthoughts', { _id: thoughtId});
+      }  
+      amplify.publish(messages.thought.update+"?"+thoughtId, thought);
+  	});
+  });
+  socket.on('error', function (error) {
+    console.log('connection failed due to ' + error);
+    if (error == 'handshake error') {
+      amplify.publish(interface.messages.openLoginView, {});
+    }
+    else {
+      location.reload();
+    }
+  });
+}
+  
+  
+  $.widget( "TestNamespace.objectHandlerModule", {
 			// the constructor
 			_create: function() {
 				
@@ -6,57 +50,21 @@
 				var indexInThoughtList = 0;
 				
 				var thisWidget = this;
-
-                var socket = io.connect('http://' + document.domain + '/thoughts');
-                socket.on('handshake', function (data) {
-                    if (data.authorized === false) 
-                    {
-                        amplify.publish(interface.messages.openLoginView, {});
-                        amplify.subscribe(interface.messages.login, function(loginobject){		
-                             socket.emit('handshake', loginobject);
-                             //socket.emit('getusers', {"username": loginobject.username});
-                             
-        				});
-                    }
-                });        
-                      
-                socket.on('thought', function (recievedthought) {
-                    thisWidget.addThought(recievedthought);
-                });   
-                
-                socket.on('user', function (recievedthought) {
-                   var i = 0;
-                });    
-
-                //subscribe to mediator updates
-				amplify.subscribe(messages.thought.update, function(arg){
-					//TODO: replace with real use of server connection	
-                    socket.emit('getthoughts', {});      
-				});
-				
-				amplify.subscribe(messages.thought.create, function(thought){
-					
-				//	alert("not done");
-					//1. ajax call to add to server. this shuld return te real object when done
-					//2. add real object to thoughts list
-					//3. sen added call via mediator
-			        socket.emit('insertthought', thought);
-					//thisWidget.addThought(arg);
-					});
-		
-            	amplify.subscribe(messages.thought.get, function(thoughtId){
-					
-                    var thought = thisWidget.objectModel.thoughts[thoughtId];
-                    
-                    if(thought === undefined)
-                    {
-                        socket.emit('getthoughts', { _id: thoughtId}); 
-                       
-                    }
-                    
-			        amplify.publish(messages.thought.update+"?"+thoughtId, thought);
-            
-				});
+        amplify.subscribe(interface.messages.login, function(loginobject){
+            $.ajax({
+              type: 'POST',
+              url: 'http://' + document.domain + '/login',
+              data: loginobject,
+              datatype: 'json',
+              success: function (result) {
+                if (result.authorized)
+                  location.reload();
+                else
+                  amplify.publish(interface.messages.openLoginView, {});
+              }
+            });
+        });
+        initSocket(thisWidget);
         
 				this._refresh();
 			},

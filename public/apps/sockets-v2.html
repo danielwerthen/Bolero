@@ -6,5 +6,8 @@
 		socket.on('connected', function (data) {
 			alert('hello');
 		});
+    socket.socket.on('error', function (reason){
+      console.error('Unable to connect Socket.IO', JSON.stringify(reason));
+    });
 	});
 </script>

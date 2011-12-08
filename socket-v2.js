@@ -5,7 +5,8 @@ var io = require('socket.io'),
 		app = express.createServer(),
 		sessionStore = new MemoryStore(),
 		Session = require('connect').middleware.session.Session,
-		parseCookie = require('connect').utils.parseCookie;
+		parseCookie = require('connect').utils.parseCookie,
+    auth = require('./server/auth-v2');
 
 
 app.configure(function () {
@@ -30,13 +31,12 @@ app.get('/', function (req, res) {
   res.end('<h2>Hello, your session id is ' + req.sessionID + '</h2>');
 });
 
-app.post('/login', function (req, res) {
-	
-});
+app.post('/login', auth.post);
 
-app.get('')
-
-app.listen(8888);
+if (process.env.PORT)
+  app.listen(process.env.PORT);
+else
+  app.listen(8888);
 var sio = io.listen(app);
 
 sio.set('authorization', function (data, accept) {
@@ -47,7 +47,7 @@ sio.set('authorization', function (data, accept) {
 		data.sessionStore = sessionStore;
 		sessionStore.get(data.sessionID, function (err, session) {
 			if (err || !session) {
-				accept('Error', false);
+				accept('Unauthorized', false);
 			}
 			else {
 				data.session = new Session(data, session);
@@ -60,9 +60,9 @@ sio.set('authorization', function (data, accept) {
 	}
 });
 
-sio.sockets.on('connection', function (socket) {
+sio.of('/thoughts').on('connection', function (socket) {
 	var hs = socket.handshake;
-	console.log('A socket with sessionID ' + socket.handshake.sessionID
+	console.log('A socket opened by user: ' + hs.session.currentUser.username
 							+ ' connected');
 
 	var intervalID = setInterval(function () {
