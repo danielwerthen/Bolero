@@ -1,7 +1,12 @@
 var Seq = require('seq');
 var dbio = require('./dbio-v3.js');
 var barrier = require('./lib/barrier');
+var tio = require('./server/thoughtio-v3');
 
+tio.getLatestThought("4ed38cda7617b7680a000001", function (error, thought) {
+  if (!error)
+    console.dir(thought);
+});
 /*dbio.find('thoughts', { })
   .seq(function (cursor) {
     cursor.limit(3, this);
@@ -18,10 +23,10 @@ var barrier = require('./lib/barrier');
     console.log('close');
     this.vars.db.close();
   })
-;*/
+;
 
 dbio
-  .seq()
+  .open()
   .parFind('users', {})
   .parFind('thoughts', {})
   .seq(function (users, thoughts) {
@@ -32,7 +37,7 @@ dbio
   .close()
 ;
 
-/*dbio
+dbio
   .seq()
   .parFindOne('thoughts', { _id: dbio.ObjectID('4ede685bdf0caf7b6a000006') })
   .parFindOne('thoughts', { _id: dbio.ObjectID('4ede6866df0caf7b6a00000b') })

@@ -1,16 +1,22 @@
 var dbio = require('../dbio-v3.js');
-var barrier = require('../lib/barrier');
 
-function getLatestThought(cb, userId) {
-  dbio.collection('thoughts')
-  .seq(function (collection) {
-    collection.findOne({ 
-      userId = userId 
-    }, {
-      "sort": ['createDate','desc']
-    }, this);
-  })
-  .seq(function (thought) {
-    cb(thought);
-  })
+function getLatestThought(userId, cb) {
+  dbio
+    .open()
+    .collection('thoughts')
+    .find({ userId: userId }, { sort: { 'createDate': -1 }, limit: 1})
+    .seq(function (cursor) {
+      cursor.toArray(this);
+    })
+    .seq(function (thought) {
+      cb(null, Array.isArray(thought) ? thought[0] : thought);
+      this(null);
+    })
+    .catch(function (error) {
+      cb(error);
+    })
+    .close()
+  ;
 }
+
+exports.getLatestThought = getLatestThought;

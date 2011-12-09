@@ -39,8 +39,8 @@ function dbio(username, password, dbname, url, port, options) {
       option = undefined;
     }
     s.seq(function (collection) {
-        collection.find(query, option, this);
-      });
+      collection.find(query, option, this);
+    });
     if (cb)
       s.seq(cb);
       
@@ -97,5 +97,5 @@ function dbio(username, password, dbname, url, port, options) {
 
 }
 
-exports.seq = dbio;
+exports.open = dbio;
 exports.ObjectID = require('mongodb/lib/mongodb/bson/bson').ObjectID;
