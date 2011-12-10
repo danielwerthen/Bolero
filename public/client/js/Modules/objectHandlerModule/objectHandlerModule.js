@@ -3,12 +3,13 @@ function initSocket(thisWidget) {
   var sio = io.connect('http://' + document.domain + '/thoughts');
   sio.on('connect', function() {
     console.log('connected');
+    
     sio.on('thought', function(recievedthought) {
       thisWidget.addThought(recievedthought);
     });
 
-    sio.on('user', function(recievedthought) {
-      var i = 0;
+    sio.on('user', function(recievedUser) {
+      this.Widget.addUser(recievedUser);
     });
 
     //subscribe to mediator updates
@@ -16,13 +17,27 @@ function initSocket(thisWidget) {
       sio.emit('getthoughts', {});
     });
 
-    amplify.subscribe(messages.thought.create, function(thought) {
-      sio.emit('insertthought', thought);
+    amplify.subscribe(messages.thought.create, function(thought, parentThought) {
+    
+        if(parentThought != null)
+        {
+            sio.emit('insertthought', thought,function(insertedId){
+            
+                var link = {"fromId":parentThought._id,"toId":insertedId };
+                sio.emit('insertlink', link); 
+            });
+        }
+        else
+        {
+            sio.emit('insertthought', thought);
+        }
+        
+      
     });
 
 
     amplify.subscribe(messages.thought.get, function(thoughtId) {
-      var thought = thisWidget.objectModel.thoughts[thoughtId];
+      var thought = thisWidget.thoughts[thoughtId];
       if (thought === undefined) {
         sio.emit('getthoughts', {
           _id: thoughtId
@@ -30,11 +45,23 @@ function initSocket(thisWidget) {
       }
       amplify.publish(messages.thought.update + "?" + thoughtId, thought);
     });
+    
+    amplify.subscribe(messages.user.get, function(userId) {
+      var user = thisWidget.users[userId];
+      if (user === undefined) {
+        sio.emit('getusers', {
+          _id: userId
+        });
+      }
+      amplify.publish(messages.thought.update + "?" + thoughtId, thought);
+    });
+    
+    
   });
   sio.on('error', function(error) {
     console.log('connection failed due to ' + error);
     if (error == 'handshake error') {
-      amplify.publish(interface.messages.openLoginView, {});
+      amplify.publish(interface.messages.openLoginView);
     }
     else {
       setTimeout(function() {
@@ -64,7 +91,7 @@ $.widget("TestNamespace.objectHandlerModule", {
           if (result.authorized) setTimeout(function() {
             sio.socket.connect();
           }, 500);
-          else amplify.publish(interface.messages.openLoginView, {});
+          else amplify.publish(interface.messages.openLoginView);
         }
       });
     });
@@ -73,18 +100,21 @@ $.widget("TestNamespace.objectHandlerModule", {
     this._refresh();
   },
 
-  objectModel: {
     users: [],
     thoughts: [],
     linkings: [],
-    linkingTypes: []
-  },
+    linkingTypes: [],
   addThought: function(thought) {
 
-    this.objectModel.thoughts[thought._id] = thought;
+    this.thoughts[thought._id] = thought;
 
     amplify.publish(messages.thought.add, thought._id);
 
+  },
+  addUser: function(user) {
+          this.users[user._id] = user;
+
+    amplify.publish(messages.user.add, user._id);
   },
 
   // called when created, and later when changing options

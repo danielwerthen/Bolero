@@ -5,6 +5,7 @@ document.write("<script src='js/Modules/messages.js'><\/script>");
 
 document.write("<script src='js/Modules/loginModule/loginModule.js'><\/script>");
 document.write("<script src='js/Modules/thoughtModule/thoughtModule.js'><\/script>");
+document.write("<script src='js/Modules/userModule/userModule.js'><\/script>");
 
 document.write("<script src='js/Modules/menuModule/menuModule.js'><\/script>");
 document.write("<script src='js/Modules/objectHandlerModule/objectHandlerModule.js'><\/script>");

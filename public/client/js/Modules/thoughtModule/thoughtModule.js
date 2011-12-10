@@ -20,12 +20,24 @@ $.widget( "TestNamespace.thoughtModule", {
                     thoughtVisual.append(create("h3").text(thisWidget.thought.title));
     				thoughtVisual.append(create("p").text(thisWidget.thought.content));
 					//thoughtVisual.append(create("p").text(thought.user.firstname+ " " + thought.user.lastname).addClass("user"));
-	/*				for(var _linking = 0; _linking < thought.linkings.length; _linking++)
+
+    			var userVisual = create("div").userModule({"userId":thought.userId});
+				thoughtVisual.append(userVisual);
+
+
+/*				for(var _linking = 0; _linking < thought.linkings.length; _linking++)
 					{
 							thoughtVisual.append(create("p").text(thought.linkings[_linking].id).addClass("linking"));
 					}
 	*/
-            
+        	var respondbutton = create("button").text("respond");
+
+    		respondbutton.click(function(){
+                amplify.publish(interface.messages.openCreateView, thisWidget.thought);
+                });
+
+            thoughtVisual.append(respondbutton);
+          
 				});
         
         

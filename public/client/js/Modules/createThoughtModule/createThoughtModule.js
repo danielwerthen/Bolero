@@ -37,10 +37,11 @@
 				{
 					var thoughtobject = {"title":$("#title").val(),"content":$("#content").val()};
 					
-						 amplify.publish(messages.thought.create, thoughtobject );
+						 amplify.publish(messages.thought.create, thoughtobject, thisWidget.parentThought );
 						 thoughtobject = null;
 						 $("#title").val("");
 						 $("#content").val("");
+                          thisWidget.parentThought  = null;
 						 $(this).dialog("close"); 
 				},
                 "Cancel": function(){
@@ -50,15 +51,21 @@
 		});
 				
 				
-				amplify.subscribe(interface.messages.openCreateView, function(arg){
+				amplify.subscribe(interface.messages.openCreateView, function(parentThought){
 						
+                        if(parentThought != undefined)
+                        {
+                            thisWidget.parentThought = parentThought;
+                            createFormContainer.find("#title").val(thisWidget.parentThought.title);
+                        }
+                        
 						createFormContainer.dialog("open");
 							
 				});
 					
 				this._refresh();
 			},
-					
+			parentThought : null,		
 			// called when created, and later when changing options
 			_refresh: function() {
 				

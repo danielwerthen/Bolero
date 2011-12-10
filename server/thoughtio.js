@@ -43,7 +43,14 @@ function initialize(db, socket) {
         socket.emit('user', user);
     });
   };
-  
+
+  var sendUsers = function (filter, callback) {
+    db.toArray('users', filter, function (err, thoughts) {
+      if (!err && thoughts)
+        callback(users);
+    });
+  };
+
   var sendThoughts = function (filter, user, callback) {
     db.toArray('thoughts', filter, function (err, thoughts) {
       if (!err && thoughts)
@@ -59,13 +66,17 @@ function initialize(db, socket) {
     });
 	};
 
-	var insertThought = function(thought, user) {
+	var insertThought = function(thought, user,callback) {
 		if (thought.title && thought.content) {
 			thought.userId = user._id.toString();
       thought.createDate = new Date();
 			db.insert('thoughts', thought, function(err, result) {
 				if (!err) {
 					socket.emit('insertthought', result[0]);
+                    if(callback != undefined)
+                    {
+                        callback(result[0]._id);
+                    }              
 				}
 				else {
 					console.log('added thought');
@@ -119,6 +130,7 @@ function initialize(db, socket) {
   var getBackwardThoughts = getLinkedThoughts('toId', 'fromId');
 
   ioHandler(socket, 'getusers', getUsers);
+   ioHandler(socket, 'sendusers', sendUsers);
 	ioHandler(socket, 'getthoughts', getThoughts);
   ioHandler(socket, 'sendthoughts', sendThoughts);
   ioHandler(socket, 'insertthought', insertThought);
