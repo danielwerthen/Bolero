@@ -46,6 +46,24 @@ function dbio(username, password, dbname, url, port, options) {
       
     return s;
   };
+  
+  s.each = function (cb) {
+    s.seq(function (cursor) {
+      cursor.each(function (err, item) {
+        if (item)
+          cb(item);
+        else if (err || !item)
+          this(err);
+      });
+    });
+    return s;
+  };
+  
+  s.toArray = function () {
+    s.seq(function (cursor) {
+      cursor.toArray(this);
+    });
+  };
     
   s.findOne = function (query, cb) {
     s
@@ -97,5 +115,31 @@ function dbio(username, password, dbname, url, port, options) {
 
 }
 
+function each(collection, query, option, cb) {
+  dbio
+    .open()
+    .collection(collection)
+    .find(query, option)
+    .each(cb)
+    .catch(function (error) {
+      db(error);
+    })
+    .close()
+  ;
+}
+
+function toArray(collection, query, option, cb) {
+  dbio
+    .open()
+    .collection(collection)
+    .find(query, option)
+    .toArray()
+    .seq(cb)
+    .close()
+  ;
+}
+
+exports.each = each;
+exports.toArrray = toArray;
 exports.open = dbio;
 exports.ObjectID = require('mongodb/lib/mongodb/bson/bson').ObjectID;
