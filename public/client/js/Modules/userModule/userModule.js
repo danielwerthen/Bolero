@@ -9,13 +9,21 @@ $.widget( "TestNamespace.userModule", {
 	_create: function() {
 	//amplify getthought?id
     
-    var thisWidget = this;
-    
-	    var userVisual = this.element.addClass("user");
-		
-        userVisual.append(create("p").text(thisWidget.options.userId));
+        var thisWidget = this;
+        var userVisual = this.element.addClass("user");
+        var loadingIcon = create("p").text("loading").addClass("loadingIcon");
+        
+        userVisual.append(loadingIcon);
+        
+        amplify.subscribe(messages.user.update+"?"+thisWidget.options.userId, function(user){   				
+           userVisual.html("");
+           thisWidget.user = user;        
+            userVisual.append(create("p").text("username: "+ thisWidget.options.userId));            
+		});
        
-			
+        amplify.publish(messages.user.get, thisWidget.options.userId);   
+       
+	
 		this._refresh();
 	},
     user: {},

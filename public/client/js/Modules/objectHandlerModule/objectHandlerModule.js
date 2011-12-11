@@ -39,8 +39,14 @@ function initSocket(thisWidget) {
     amplify.subscribe(messages.thought.get, function(thoughtId) {
       var thought = thisWidget.thoughts[thoughtId];
       if (thought === undefined) {
-        sio.emit('getthoughts', {
+        sio.emit('sendthoughts', {
           _id: thoughtId
+        }, 
+        function(result){
+            if(result !== undefined )
+            {
+                thought = result;
+            }
         });
       }
       amplify.publish(messages.thought.update + "?" + thoughtId, thought);
@@ -49,11 +55,18 @@ function initSocket(thisWidget) {
     amplify.subscribe(messages.user.get, function(userId) {
       var user = thisWidget.users[userId];
       if (user === undefined) {
-        sio.emit('getusers', {
+        sio.emit('sendusers', {
           _id: userId
+        },
+        function(result){
+            if(result !== undefined)
+            {
+                user = result;
+               // this.users[user._id] = user;
+            }
         });
       }
-      amplify.publish(messages.thought.update + "?" + thoughtId, thought);
+      amplify.publish(messages.user.update + "?" + userId, user);
     });
     
     

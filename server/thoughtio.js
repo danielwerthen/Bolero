@@ -44,10 +44,13 @@ function initialize(db, socket) {
     });
   };
 
-  var sendUsers = function (filter, callback) {
-    db.toArray('users', filter, function (err, thoughts) {
-      if (!err && thoughts)
-        callback(users);
+  var sendUsers = function (filter, user, callback) {
+    db.toArray('users', filter, function (err, users) {
+      if (!err && users)
+        if(callback !== undefined)
+        {
+            callback(users);
+        }
     });
   };
 
@@ -73,7 +76,7 @@ function initialize(db, socket) {
 			db.insert('thoughts', thought, function(err, result) {
 				if (!err) {
 					socket.emit('insertthought', result[0]);
-                    if(callback != undefined)
+                    if(callback !== undefined)
                     {
                         callback(result[0]._id);
                     }              
