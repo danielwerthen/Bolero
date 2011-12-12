@@ -38,7 +38,7 @@ function initialize(db, socket) {
   });
   
   var getUsers = function (filter, current) {
-    if (filter._id && filter._id == 'string')
+    if (filter._id && typeof(filter._id) === 'string')
       filter._id = dbio.ObjectID(filter._id);
     db.foreach('users', filter, function (err, user) {
       if (!err && u !== null)
@@ -47,11 +47,15 @@ function initialize(db, socket) {
   };
 
   var sendUsers = function (filter, user, callback) {
+      console.log(filter);
+      console.log(filter._id);
+    if (filter._id && typeof(filter._id) === 'string')
+      filter._id = dbio.ObjectID(filter._id);
     db.toArray('users', filter, function (err, users) {
       if (!err && users)
         if(callback !== undefined)
         {
-            callback(users);
+            callback(users[0]);
         }
     });
   };
@@ -65,7 +69,7 @@ function initialize(db, socket) {
   
   var getThoughts = function (filter, user) {
     if (filter === null) filter = { userId: user._id.toString() };
-    if (filter._id && filter._id == 'string')
+    if (filter._id && typeof(filter._id) === 'string')
       filter._id = dbio.ObjectID(filter._id);
 		db.foreach('thoughts', filter, function (err, thought) {
       if (!err && thought !== null)
@@ -109,7 +113,7 @@ function initialize(db, socket) {
   
   var getLinks = function (filter, user) {
     console.log('getlinks ' + JSON.stringify(filter));
-    if (filter._id && filter._id == 'string')
+    if (filter._id && typeof(filter._id) === 'string')
       filter._id = dbio.ObjectID(filter._id);
     db.foreach('links', filter, function (err, thought) {
       if (!err && thought !== null)
@@ -134,7 +138,7 @@ function initialize(db, socket) {
       }
     };
   };
-  
+ 
   var getForwardThoughts = getLinkedThoughts('fromId', 'toId');
   var getBackwardThoughts = getLinkedThoughts('toId', 'fromId');
 

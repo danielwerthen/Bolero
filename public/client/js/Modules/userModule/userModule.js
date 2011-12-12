@@ -18,7 +18,7 @@ $.widget( "TestNamespace.userModule", {
         amplify.subscribe(messages.user.update+"?"+thisWidget.options.userId, function(user){   				
            userVisual.html("");
            thisWidget.user = user;        
-            userVisual.append(create("p").text("username: "+ thisWidget.options.userId));            
+            userVisual.append(create("p").text("username: "+ thisWidget.user.username));            
 		});
        
         amplify.publish(messages.user.get, thisWidget.options.userId);   

@@ -30,11 +30,8 @@ function initSocket(thisWidget) {
         else
         {
             sio.emit('insertthought', thought);
-        }
-        
-      
+        }  
     });
-
 
     amplify.subscribe(messages.thought.get, function(thoughtId) {
       var thought = thisWidget.thoughts[thoughtId];
@@ -63,14 +60,34 @@ function initSocket(thisWidget) {
             {
                 user = result;
                // this.users[user._id] = user;
+               amplify.publish(messages.user.update + "?" + userId, user);
             }
         });
       }
-      amplify.publish(messages.user.update + "?" + userId, user);
+      else
+      {
+          amplify.publish(messages.user.update + "?" + userId, user);
+        }
+      
     });
     
+   amplify.subscribe(messages.thought.getLinks, function(thoughtId) {
+     
+        sio.emit('getforwardthoughts', {
+          _id: thoughtId
+        },
+        function(result){
+            if(result !== undefined)
+            {
+              amplify.publish(messages.thought.getLinks + "?" + thoughtId, result);
+            }
+        });
+    
+    });
     
   });
+
+  
   sio.on('error', function(error) {
     console.log('connection failed due to ' + error);
     if (error == 'handshake error') {
@@ -84,7 +101,6 @@ function initSocket(thisWidget) {
   });
   return sio;
 }
-
 
 $.widget("TestNamespace.objectHandlerModule", {
   // the constructor
@@ -108,6 +124,7 @@ $.widget("TestNamespace.objectHandlerModule", {
         }
       });
     });
+    
     var sio = initSocket(thisWidget);
 
     this._refresh();

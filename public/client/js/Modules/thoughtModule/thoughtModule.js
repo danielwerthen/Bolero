@@ -43,6 +43,13 @@ $.widget( "TestNamespace.thoughtModule", {
         
              amplify.publish(messages.thought.get, thisWidget.options.thoughtId);   
 
+             amplify.publish(messages.thought.getLinks, thisWidget.options.thoughtId);   
+
+            amplify.subscribe(messages.thought.getLinks+"?"+thisWidget.options.thoughtId, function(links){
+            
+                thoughtVisual.append(create("p").text("Link"));
+            
+            });
 		
 			
 		this._refresh();

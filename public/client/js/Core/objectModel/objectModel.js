@@ -19,7 +19,8 @@ var messages = {
         get:"thought.get",
 		remove:"thougth.remove",
 		create:"thougth.create",
-		update:"thougth.update"
+		update:"thougth.update",
+        getLinks:"thought.getLinks"
 	},
 	
     link : {
