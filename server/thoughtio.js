@@ -38,6 +38,8 @@ function initialize(db, socket) {
   });
   
   var getUsers = function (filter, current) {
+    if (filter._id && filter._id == 'string')
+      filter._id = dbio.ObjectID(filter._id);
     db.foreach('users', filter, function (err, user) {
       if (!err && u !== null)
         socket.emit('user', user);
@@ -63,6 +65,8 @@ function initialize(db, socket) {
   
   var getThoughts = function (filter, user) {
     if (filter === null) filter = { userId: user._id.toString() };
+    if (filter._id && filter._id == 'string')
+      filter._id = dbio.ObjectID(filter._id);
 		db.foreach('thoughts', filter, function (err, thought) {
       if (!err && thought !== null)
         socket.emit('thought', thought);
@@ -105,6 +109,8 @@ function initialize(db, socket) {
   
   var getLinks = function (filter, user) {
     console.log('getlinks ' + JSON.stringify(filter));
+    if (filter._id && filter._id == 'string')
+      filter._id = dbio.ObjectID(filter._id);
     db.foreach('links', filter, function (err, thought) {
       if (!err && thought !== null)
         socket.emit('link', thought);

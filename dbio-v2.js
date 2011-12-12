@@ -70,3 +70,5 @@ exports = module.exports = function(callback, username, password, dbname, url, p
     });
   });
 };
+
+exports.ObjectID = require('mongodb/lib/mongodb/bson/bson').ObjectID;
