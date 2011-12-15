@@ -2,10 +2,18 @@ var Seq = require('seq');
 var dbio = require('./dbio-v3.js');
 var barrier = require('./lib/barrier');
 var tio = require('./server/thoughtio-v3');
+var userService = require('./server/users/userService.js');
+var thoughtService = require('./server/thoughts/thoughtService');
 
-tio.getLatestThought("4ed38cda7617b7680a000001", function (error, thought) {
-  if (!error)
-    console.dir(thought);
+userService.getUsers(function (err, users) {
+  console.log('got ' + users.length + ' users, first of which is ' + users[0].username);
+  var user = users[0];
+  userService.getUser(user._id.toString(), function (err, user) {
+    console.log('Found the first user again: ' + user.username);
+    thoughtService.getLatestThought(user._id.toString(), function (err, thought) {
+      console.log('Successfully extracted the latest thought: ' + thought.title + ' {' + thought.content + '}');
+    });
+  });
 });
 /*dbio.find('thoughts', { })
   .seq(function (cursor) {

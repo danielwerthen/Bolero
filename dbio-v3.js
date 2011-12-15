@@ -39,7 +39,7 @@ function dbio(username, password, dbname, url, port, options) {
       option = undefined;
     }
     s.seq(function (collection) {
-      collection.find(query, option, this);
+      collection.find(query || {}, option || {}, this);
     });
     if (cb)
       s.seq(cb);
@@ -63,6 +63,7 @@ function dbio(username, password, dbname, url, port, options) {
     s.seq(function (cursor) {
       cursor.toArray(this);
     });
+    return s;
   };
     
   s.findOne = function (query, cb) {
@@ -70,8 +71,9 @@ function dbio(username, password, dbname, url, port, options) {
       .seq(function (collection) {
         collection.findOne(query, this);
       })
-      .seq(cb)
     ;
+    if (cb)
+      s.seq(cb);
     return s;
   };
   
@@ -80,7 +82,7 @@ function dbio(username, password, dbname, url, port, options) {
       .par(function () {
         var self = this;
         db.collection(col, function (err, collection) {
-          collection.find(query, options || {}, function (err, cursor) {
+          collection.find(query || {}, options || {}, function (err, cursor) {
             cursor.toArray(self);
           });
         });

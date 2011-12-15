@@ -1,41 +1,56 @@
 var dbio = require('../dbio-v3.js');
 var logger = require('../utils/logger');
+var users = require('../server/users/userService.js');
+var thoughts = require('../server/thoughts/thoughtService.js');
 
-function getLatestThought(userId, cb) {
-  dbio
-    .open()
-    .collection('thoughts')
-    .find({ userId: userId }, { sort: { 'createDate': -1 }, limit: 1})
-    .toArray()
-    .seq(function (thought) {
-      cb(null, Array.isArray(thought) ? thought[0] : thought);
-      this(null);
-    })
-    .catch(function (error) {
-      cb(error);
-    })
-    .close()
-  ;
+function toString(obj) {
+  if (!obj)
+    return null;
+  else if (obj.toString)
+    return obj.toString();
+  else if (typeof obj === 'string')
+    return obj;
+  else
+    return null;
 }
-
-
 
 function setup(socket) {
   var user = socket.handshake.session.currentUser;
   
-  function sioGetLatestThought(data, fn) {
-    getLatestThought(user._id.toString(), function (err, thought) {
+  function callback(fn) {
+    return function (err, data) {
       if (err)
         logger.log(err);
-      if (fn && thought) {
-        fn(thought);
-      }
-    });
+      if (fn && data)
+        fn(data);
+    };
+  }
+  
+  function sioGetLatestThought(data, fn) {
+    var userId = toString(data._id);
+    thoughts.getLatestThought(userId, callback(fn));
+  }
+  
+  function sioGetUser(data, fn) {
+    var userId = toString(data._id);
+    users.getUser(userId, callback(fn));
+  }
+  
+  function sioGetUsers(data, fn) {
+    users.getUsers(callback(fn));
   }
   
   socket.on('getLatestThought', sioGetLatestThought);
+  socket.on('getUser', sioGetUser);
+  socket.on('getUsers', sioGetUsers);
+  
+  /*
+  ioHandler(socket, 'getthoughts', getThoughts);
+  ioHandler(socket, 'sendthoughts', sendThoughts);
+  ioHandler(socket, 'insertthought', insertThought);
+  ioHandler(socket, 'getlinks', getLinks);
+  ioHandler(socket, 'insertlink', insertLink);*/
 }
 
-exports.getLatestThought = getLatestThought;
 exports.setup = setup;
 
