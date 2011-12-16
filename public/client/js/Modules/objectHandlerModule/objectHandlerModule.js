@@ -14,7 +14,12 @@ function initSocket(thisWidget) {
 
     //subscribe to mediator updates
     amplify.subscribe(messages.thought.update, function(arg) {
-      sio.emit('getthoughts', {});
+      sio.emit('getthoughts', {}, function(thoughts) {
+        for(var i in thoughts) {
+          var thought = thoughts[i];
+          thisWidget.addThought(thought);
+        }
+      });
     });
 
     amplify.subscribe(messages.thought.create, function(thought, parentThought) {

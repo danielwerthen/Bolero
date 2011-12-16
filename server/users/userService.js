@@ -33,5 +33,18 @@ function getUsers(cb) {
   ;
 }
 
+function insertUser(user, cb) {
+  dbio
+    .open()
+    .collection('users')
+    .insert(user)
+    .seq(function (result) {
+      cb(null, result);
+      this(null);
+    })
+    .close();
+}
+
 exports.getUser = getUser;
 exports.getUsers = getUsers;
+exports.insertUser = insertUser;

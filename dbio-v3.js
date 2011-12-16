@@ -47,6 +47,13 @@ function dbio(username, password, dbname, url, port, options) {
     return s;
   };
   
+  s.insert = function (data) {
+    s.seq(function (collection) {
+      collection.insert(data, this);
+    });
+    return s;
+  };
+  
   s.each = function (cb) {
     s.seq(function (cursor) {
       cursor.each(function (err, item) {

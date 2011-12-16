@@ -7,7 +7,7 @@ var io = require('socket.io'),
 		Session = require('connect').middleware.session.Session,
 		parseCookie = require('connect').utils.parseCookie,
     auth = require('./server/auth-v2'),
-    tio = require('./server/thoughtio');
+    tio = require('./server/thoughtio-v3.js');
 
 
 app.configure(function () {
@@ -75,7 +75,7 @@ sio.of('/thoughts').on('connection', function (socket) {
 		});
 	}, 60 * 1000);
   
-  tio(null, socket);
+  tio.setup(socket);
 
 	socket.on('disconnect', function () {
 		console.log('A socket with sessionID ' + hs.sessionID + ' disconnected!');
