@@ -49,7 +49,38 @@ function dbio(username, password, dbname, url, port, options) {
   
   s.insert = function (data) {
     s.seq(function (collection) {
-      collection.insert(data, this);
+      collection.insert(data, { safe: true }, this);
+    });
+    return s;
+  };
+  
+  s.remove = function (query, options) {
+    s.seq(function (collection) {
+      var self = this;
+      collection.remove(query, options, function (err) {
+        if (err)
+          self(err);
+        else
+          self(null, collection);
+      });
+    });
+    return s;
+  };
+  
+  s.update = function (query, data, options) {
+    s.seq(function (collection) {
+      options = options || {};
+      options.safe = true;
+      collection.update(query, data, options, this);
+    });
+    return s;
+  };
+  
+  s.findAndModify = function (query, sort, data, options) {
+    s.seq(function (collection) {
+      options = options || { 'new' : true };
+      sort = sort || [['_id','ascending']];
+      collection.findAndModify(query, sort, data, options, this);
     });
     return s;
   };
@@ -112,12 +143,18 @@ function dbio(username, password, dbname, url, port, options) {
     return s;
   };
   
-  s.close = function () {
+  s.close = function (cb) {
     s
       .seq(function () {
-        db.close();
+        var self = this;
+        db.close(function (err) {
+          if (cb)
+            cb();
+          self(err);
+        });
       })
     ;
+    return s;
   };
   
   return s;
