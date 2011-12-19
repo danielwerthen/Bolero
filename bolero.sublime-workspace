@@ -16,58 +16,18 @@
 	"buffers":
 	[
 		{
-			"file": "authentication.js",
+			"file": "socket-v2.js",
 			"settings":
 			{
-				"buffer_size": 2153,
+				"buffer_size": 1927,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "index.js",
+			"file": "public/apps/sockets-v2.html",
 			"settings":
 			{
-				"buffer_size": 2664,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "server/auth.js",
-			"settings":
-			{
-				"buffer_size": 789,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "socket.js",
-			"settings":
-			{
-				"buffer_size": 970,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "server/thoughtio.js",
-			"settings":
-			{
-				"buffer_size": 2048,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "public/apps/sockets.html",
-			"settings":
-			{
-				"buffer_size": 848,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "dbio-v2.js",
-			"settings":
-			{
-				"buffer_size": 2211,
+				"buffer_size": 383,
 				"line_ending": "Windows"
 			}
 		}
@@ -96,19 +56,25 @@
 	},
 	"file_history":
 	[
-		"/C/git/Bolero/public/client/js/initialize.js",
+		"/C/git/Bolero/api.js",
+		"/C/git/Bolero/authentication.js",
+		"/C/git/Bolero/socket.js",
+		"/C/git/Bolero/public/client/js/Modules/objectHandlerModule/objectHandlerModule.js",
+		"/C/git/Bolero/public/apps/sockets.html",
+		"/C/git/Bolero/server/thoughtio.js",
+		"/C/git/Bolero/server/auth.js",
+		"/C/git/Bolero/index.js",
+		"/C/git/Bolero/dbio-v2.js",
 		"/C/git/Bolero/public/client/index.html",
+		"/C/git/Bolero/public/client/js/initialize.js",
 		"/C/git/Bolero/public/apps/api-test.html",
 		"/C/git/Bolero/public/api-proxy/bolero.js",
-		"/C/git/Bolero/api.js",
 		"/C/git/Bolero/node_modules/mongodb/examples/types.js",
 		"/C/git/Bolero/views/registration.jade",
 		"/C/git/Bolero/node_modules/mongodb/examples/queries.js",
 		"/C/git/Bolero/dbio.js",
-		"/C/git/Bolero/authentication.js",
 		"/C/git/Bolero/views/login.jade",
 		"/C/git/Bolero/views/index.jade",
-		"/C/git/Bolero/index.js",
 		"/C/git/celph/styles/main.css",
 		"/C/git/celph/web.config",
 		"/C/git/imagraph/imagraph.sublime-project",
@@ -180,30 +146,27 @@
 	"groups":
 	[
 		{
-			"selected": 4,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "authentication.js",
+					"file": "socket-v2.js",
 					"settings":
 					{
-						"buffer_size": 2153,
+						"buffer_size": 1927,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								351,
-								350
+								427,
+								427
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -213,166 +176,26 @@
 				},
 				{
 					"buffer": 1,
-					"file": "index.js",
+					"file": "public/apps/sockets-v2.html",
 					"settings":
 					{
-						"buffer_size": 2664,
+						"buffer_size": 383,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2193,
-								2156
+								199,
+								199
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 1200.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "server/auth.js",
-					"settings":
-					{
-						"buffer_size": 789,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								144,
-								144
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
+							"syntax": "Packages/HTML/HTML.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "socket.js",
-					"settings":
-					{
-						"buffer_size": 970,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								950,
-								950
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 6.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "server/thoughtio.js",
-					"settings":
-					{
-						"buffer_size": 2048,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1295,
-								1295
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 360.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "public/apps/sockets.html",
-					"settings":
-					{
-						"buffer_size": 848,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								413,
-								413
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "dbio-v2.js",
-					"settings":
-					{
-						"buffer_size": 2211,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								488,
-								488
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 600.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
