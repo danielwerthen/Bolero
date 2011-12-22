@@ -57,6 +57,8 @@ function dbio() {
   
   s.close = function (cb) {
     s.join();
+    s.flatten();
+    s.unflatten();
     if (cb)
       s.seq(cb);
     
