@@ -16,18 +16,34 @@
 	"buffers":
 	[
 		{
-			"file": "socket-v2.js",
+			"file": "tests/dbio/v4.js",
 			"settings":
 			{
-				"buffer_size": 1927,
+				"buffer_size": 853,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "public/apps/sockets-v2.html",
+			"file": "dbio-v4.js",
 			"settings":
 			{
-				"buffer_size": 383,
+				"buffer_size": 2414,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "server/communities/communityService.js",
+			"settings":
+			{
+				"buffer_size": 2196,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "dbio-v3.js",
+			"settings":
+			{
+				"buffer_size": 4013,
 				"line_ending": "Windows"
 			}
 		}
@@ -56,6 +72,12 @@
 	},
 	"file_history":
 	[
+		"/C/git/Bolero/node_modules/seq/index.js",
+		"/C/git/Bolero/node_modules/mongodb/lib/mongodb/collection.js",
+		"/C/git/Bolero/node_modules/mongodb/lib/mongodb/cursor.js",
+		"/C/git/Bolero/dbio-v3.js",
+		"/C/git/Bolero/public/apps/sockets-v2.html",
+		"/C/git/Bolero/socket-v2.js",
 		"/C/git/Bolero/api.js",
 		"/C/git/Bolero/authentication.js",
 		"/C/git/Bolero/socket.js",
@@ -121,6 +143,12 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"prototype",
+			"find",
+			"self",
+			"Cursor.prototype.",
+			"Collection.prototype.",
+			"find",
 			"local2",
 			"config",
 			"minport",
@@ -128,7 +156,7 @@
 			"orbit"
 		],
 		"highlight": true,
-		"in_selection": true,
+		"in_selection": false,
 		"preserve_case": false,
 		"regex": false,
 		"replace_history":
@@ -146,22 +174,23 @@
 	"groups":
 	[
 		{
+			"selected": 1,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "socket-v2.js",
+					"file": "tests/dbio/v4.js",
 					"settings":
 					{
-						"buffer_size": 1927,
+						"buffer_size": 853,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								427,
-								427
+								417,
+								417
 							]
 						],
 						"settings":
@@ -176,26 +205,84 @@
 				},
 				{
 					"buffer": 1,
-					"file": "public/apps/sockets-v2.html",
+					"file": "dbio-v4.js",
 					"settings":
 					{
-						"buffer_size": 383,
+						"buffer_size": 2414,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								199,
-								199
+								727,
+								726
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/HTML/HTML.tmLanguage"
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 360.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "server/communities/communityService.js",
+					"settings":
+					{
+						"buffer_size": 2196,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								331,
+								331
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "dbio-v3.js",
+					"settings":
+					{
+						"buffer_size": 4013,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								315,
+								315
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 360.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"

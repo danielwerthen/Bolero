@@ -1,9 +1,8 @@
 var mongo = require('mongodb'),
-    Seq = require('seq');
+    xSeq = require('./lib/xSeq');
 
-function extendedSeq(parent, db) {
-  var s = Seq();
-    function extend(name) {
+function extend(s, db) {
+    function _extend(name) {
       s[name] = function () {
         var args = Array.prototype.slice.call(arguments, 0);
         s.seq(function (collection) {
@@ -14,29 +13,18 @@ function extendedSeq(parent, db) {
       };
     }
     
-    extend('find');
-    extend('findAndModify');
-    extend('insert');
-    extend('findOne');
-    extend('group');
-    extend('remove');
-    extend('insertAll');
-    extend('save');
-    extend('update');
-    extend('count');
+    _extend('find');
+    _extend('findAndModify');
+    _extend('insert');
+    _extend('findOne');
+    _extend('group');
+    _extend('remove');
+    _extend('insertAll');
+    _extend('save');
+    _extend('update');
+    _extend('count');
 
-    extend('toArray');
-
-    var paths = [];
-    s.split = function (cb) {
-      s.seq(function (data) {
-        var path = extendedSeq(s, db);
-        cb(path, data);
-        paths.push(path);
-        this(null);
-      });
-      return s;
-    };
+    _extend('toArray');
 
     s.collection = function (col) {
       s.seq(function () {
@@ -44,39 +32,10 @@ function extendedSeq(parent, db) {
       });
       return s;
     }
-
-    var looseEnds = [];
-    s.close = function (path) {
-      s.seq(function () {
-        if (path) {
-          console.log('remove a path')
-          var idx = paths.indexOf(path);
-          if (idx !== -1) {
-            paths.splice(idx, 1);
-          }
-        }
-
-        if (paths.length === 0) {
-          console.log('will close now')
-          parent.close(s);
-          this(null); 
-          for (var i in looseEnds) {
-            looseEnds[i]();
-          }
-        }
-        else {
-          looseEnds.push(function () {
-            s.close();
-          });
-          console.log('cant close, wait for side paths to close first');
-        }
-      });
-      return s;
-    };
   return s;
 }
 
-function dbio(callback) {
+function dbio() {
   var self = this,
       username = 'admin',
       password = 'Pass09Word',
@@ -87,26 +46,49 @@ function dbio(callback) {
 
   var db = new mongo.Db(dbname, new mongo.Server(url, port, options));
 
-  self.split = function (cb) {
-    var es = extendedSeq(self, db);
-    cb(es);
+  var s = xSeq();
+
+  s.path = function (cb) {
+    s.split(function (path) {
+      cb(extend(path, db));
+    });
+    return s;
   };
   
-  self.close = function (cb) {
-    db.close(function (err) {
-      if (cb)
-        cb(err);
+  s.close = function (cb) {
+    s.join();
+    if (cb)
+      s.seq(cb);
+    
+    s.seq(function () {
+      var args = Array.prototype.slice.call(arguments, 0),
+          self = this;
+      args.splice(0,0, null); //its important to add an null (representing empty exception)
+      db.close(function (err) {
+        self.apply(self, args);
+      });
     });
+    return s;
   };
-  db.open(function (err, result) {
-    db.authenticate(username, password, function (err, result) {
-      if (result) {
-        callback(null, self); 
-      }
-      else {
-        callback(err); 
-      }
-    });
-  })
+
+  s.open = function () {
+    s
+      .seq(function () {
+        var callback = this;
+        db.open(function (err, result) {
+          db.authenticate(username, password, function (err, result) {
+            if (result) {
+              callback(null); 
+            }
+            else {
+              callback(err); 
+            }
+          });
+        });
+      });
+    return s;
+  };
+
+  return s;
 }
-exports.open = dbio;
+module.exports = dbio;

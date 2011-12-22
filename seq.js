@@ -1,13 +1,83 @@
 var Seq = require('seq');
 var dbio = require('./dbio-v3.js');
 var barrier = require('./lib/barrier');
+var xSeq = require('./lib/xSeq');
 var tio = require('./server/thoughtio-v3');
 var userService = require('./server/users/userService.js');
 var thoughtService = require('./server/thoughts/thoughtService');
 var linkService = require('./server/links/linkService');
-var linq = require('./utils/linq.js');
 
-userService.getUsers(function (err, users) {
+
+var s = xSeq();
+
+s
+  .seq(function () {
+    this.vars.name = 'Daniel';
+    this(null, 'kalle');
+  })
+  .split(function (s2) {
+    s2
+      .seq(function ()
+      {
+        console.dir(this.vars);
+        this(null);
+      })
+      .split(function (s21) {
+        s21
+          .seq(function (data) {
+            var self = this;
+            setTimeout(function () {
+              self(null, self.vars.name);
+              console.log(self.vars.name + ' has left the building');
+            }, 1500);
+          })
+          .join();
+      })
+      .split(function (s22) {
+        s22
+          .seq(function (data) {
+            this(null, 'Johan');
+            console.log('Johan has left the building');
+          })
+          .join();
+      })
+      .seq(function (data) {
+        var ret = this;
+        setTimeout(function() {
+          ret(null, 'Olle');
+          console.log('Olle has left the building');
+        }, 1000);
+      })
+      .join();
+  })
+  .split(function (s3) {
+    s3
+      .seq(function (data) {
+        this(null, 'Anna');
+        console.log('Anna has left the building');
+      })
+      .join();
+  })
+  .seq(function (data) {
+    this(null);
+  })
+  .join()
+  .flatten()
+  .unflatten()
+  .seq(function (result) {
+    console.dir(result);
+  });
+
+
+
+
+
+
+
+
+
+
+/*userService.getUsers(function (err, users) {
   //console.log('got ' + users.length + ' users, first of which is ' + users[0].username);
   var user = users[0];
   userService.getUser(user._id.toString(), function (err, user) {
@@ -37,7 +107,7 @@ linkService.getLinks({ fromId: 'T4ede67ad1a8b599d5f000027' }, function (err, res
   //console.dir(result);
 });
 
-/*linkService.insertLink('T4ede67ad1a8b599d5f000027', 'T4ede6866df0caf7b6a00000d', function (err, result) {
+linkService.insertLink('T4ede67ad1a8b599d5f000027', 'T4ede6866df0caf7b6a00000d', function (err, result) {
   console.dir(result);
 });*/
 
