@@ -12,7 +12,7 @@ $.widget( "TestNamespace.thoughtModule", {
     var thisWidget = this;
     
 	    var thoughtVisual = this.element.addClass("thougth");
-		
+	    var linkList = create("div");	
             amplify.subscribe(messages.thought.update+"?"+thisWidget.options.thoughtId, function(thought){
 					
                     thisWidget.thought = thought;
@@ -24,31 +24,48 @@ $.widget( "TestNamespace.thoughtModule", {
     			var userVisual = create("div").userModule({"userId":thought.userId});
 				thoughtVisual.append(userVisual);
 
-
-/*				for(var _linking = 0; _linking < thought.linkings.length; _linking++)
-					{
-							thoughtVisual.append(create("p").text(thought.linkings[_linking].id).addClass("linking"));
-					}
-	*/
-        	var respondbutton = create("button").text("respond");
+                    
+        	var respondbutton = create("button").button({
+                        icons: {
+                            primary: "ui-icon-arrowreturnthick-1-w",
+                            secondary: "ui-icon-pencil"
+                        },
+                        text: false
+                        });
 
     		respondbutton.click(function(){
                 amplify.publish(interface.messages.openCreateView, thisWidget.thought);
                 });
 
             thoughtVisual.append(respondbutton);
-          
+            thoughtVisual.append(linkList);
 				});
-        
+            
         
              amplify.publish(messages.thought.get, thisWidget.options.thoughtId);   
 
              amplify.publish(messages.thought.getLinks, thisWidget.options.thoughtId);   
 
+
+//---- get links
             amplify.subscribe(messages.thought.getLinks+"?"+thisWidget.options.thoughtId, function(links){
-            
-                thoughtVisual.append(create("p").text("Link"));
-            
+               linkList.html(""); 
+               for(var link in links)
+                {
+                    var linkButton = create("button").button({
+                        icons: {
+                            primary: "ui-icon-link",
+                            secondary: "ui-icon-arrowthickstop-1-e"
+                        },
+                        text: false
+                        });
+                    
+                    linkButton.click(function(){
+                         
+                    });
+                    
+                    linkList.append(linkButton);
+                }
             });
 		
 			

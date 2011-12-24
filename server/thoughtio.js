@@ -47,8 +47,6 @@ function initialize(db, socket) {
   };
 
   var sendUsers = function (filter, user, callback) {
-      console.log(filter);
-      console.log(filter._id);
     if (filter._id && typeof(filter._id) === 'string')
       filter._id = dbio.ObjectID(filter._id);
     db.toArray('users', filter, function (err, users) {

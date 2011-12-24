@@ -14,34 +14,50 @@ function initSocket(thisWidget) {
 
     //subscribe to mediator updates
     amplify.subscribe(messages.thought.update, function(arg) {
+      //TODO: replce with 
+      //getlatestthought
+      //when current user id is saved
+      /*
       sio.emit('getthoughts', {}, function(thoughts) {
         for(var i in thoughts) {
           var thought = thoughts[i];
           thisWidget.addThought(thought);
         }
+      });*/
+      
+      sio.emit('getlatestthought', {userId:"4ed54e1a3733af7234000001"}, function(thoughts) {
+          thisWidget.addThought(thoughts);
       });
     });
 
     amplify.subscribe(messages.thought.create, function(thought, parentThought) {
     
-        if(parentThought != null)
-        {
-            sio.emit('insertthought', thought,function(insertedId){
+            sio.emit('insertthought', thought,function(insertedThoughtArray){
             
-                var link = {"fromId":parentThought._id,"toId":insertedId };
-                sio.emit('insertlink', link); 
-            });
-        }
-        else
-        {
-            sio.emit('insertthought', thought);
-        }  
+                var insertedThought = insertedThoughtArray[0];
+                var insertedId = insertedThought._id;
+                if(insertedId !== undefined)
+                {
+                    if(parentThought != null)
+                    {
+                        var link = {"fromId":parentThought._id,"toId":insertedId };
+                        sio.emit('insertlink', link, function(recievedLink){
+                            
+                                amplify.publish(messages.thought.getLinks, parentThought._id);
+                            
+                            }); 
+                        
+                    }
+                    
+                    thisWidget.addThought(insertedThought);
+                } 
+            });  
     });
 
     amplify.subscribe(messages.thought.get, function(thoughtId) {
       var thought = thisWidget.thoughts[thoughtId];
       if (thought === undefined) {
-        sio.emit('sendthoughts', {
+        sio.emit('getthought', {
           _id: thoughtId
         }, 
         function(result){
@@ -57,7 +73,7 @@ function initSocket(thisWidget) {
     amplify.subscribe(messages.user.get, function(userId) {
       var user = thisWidget.users[userId];
       if (user === undefined) {
-        sio.emit('sendusers', {
+        sio.emit('getuser', {
           _id: userId
         },
         function(result){
@@ -78,8 +94,8 @@ function initSocket(thisWidget) {
     
    amplify.subscribe(messages.thought.getLinks, function(thoughtId) {
      
-        sio.emit('getforwardthoughts', {
-          _id: thoughtId
+        sio.emit('getlinks', {
+          fromId: thoughtId
         },
         function(result){
             if(result !== undefined)
@@ -87,7 +103,7 @@ function initSocket(thisWidget) {
               amplify.publish(messages.thought.getLinks + "?" + thoughtId, result);
             }
         });
-    
+        
     });
     
   });
