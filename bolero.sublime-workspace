@@ -19,7 +19,7 @@
 			"file": "tests/dbio/v4.js",
 			"settings":
 			{
-				"buffer_size": 853,
+				"buffer_size": 754,
 				"line_ending": "Windows"
 			}
 		},
@@ -27,7 +27,7 @@
 			"file": "dbio-v4.js",
 			"settings":
 			{
-				"buffer_size": 2414,
+				"buffer_size": 2028,
 				"line_ending": "Windows"
 			}
 		},
@@ -44,6 +44,30 @@
 			"settings":
 			{
 				"buffer_size": 4013,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "seq.js",
+			"settings":
+			{
+				"buffer_size": 4514,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "lib/barrier.js",
+			"settings":
+			{
+				"buffer_size": 624,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "lib/xSeq.js",
+			"settings":
+			{
+				"buffer_size": 2708,
 				"line_ending": "Windows"
 			}
 		}
@@ -143,6 +167,8 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"join",
+			"console",
 			"prototype",
 			"find",
 			"self",
@@ -174,7 +200,7 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 0,
 			"sheets":
 			[
 				{
@@ -182,20 +208,21 @@
 					"file": "tests/dbio/v4.js",
 					"settings":
 					{
-						"buffer_size": 853,
+						"buffer_size": 754,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								417,
-								417
+								515,
+								515
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -208,15 +235,15 @@
 					"file": "dbio-v4.js",
 					"settings":
 					{
-						"buffer_size": 2414,
+						"buffer_size": 2028,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								727,
-								726
+								1270,
+								1270
 							]
 						],
 						"settings":
@@ -226,7 +253,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 360.0,
+						"translation.y": 972.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -283,6 +310,88 @@
 						},
 						"translation.x": 0.0,
 						"translation.y": 360.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "seq.js",
+					"settings":
+					{
+						"buffer_size": 4514,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								580,
+								580
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "lib/barrier.js",
+					"settings":
+					{
+						"buffer_size": 624,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "lib/xSeq.js",
+					"settings":
+					{
+						"buffer_size": 2708,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								469,
+								473
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 810.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"

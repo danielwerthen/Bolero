@@ -1,6 +1,6 @@
 function initSocket(thisWidget) {
-  console.log('connecting to ' + document.domain);
-  var sio = io.connect('http://' + document.domain + '/thoughts');
+  console.log('connecting to ' + document.domain );
+  var sio = io.connect('http://' + document.location.host + '/thoughts');
   sio.on('connect', function() {
     console.log('connected');
     
@@ -134,7 +134,7 @@ $.widget("TestNamespace.objectHandlerModule", {
     amplify.subscribe(interface.messages.login, function(loginobject) {
       $.ajax({
         type: 'POST',
-        url: 'http://' + document.domain + '/login',
+        url: 'http://' + document.location.host + '/login',
         data: loginobject,
         datatype: 'json',
         success: function(result) {

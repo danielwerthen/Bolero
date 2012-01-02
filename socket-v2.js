@@ -29,7 +29,7 @@ app.get('/', function (req, res) {
   res.writeHead(200, {
     'Content-Type': 'text/plain',
 	});
-  res.end('<h2>Hello, your session id is ' + req.sessionID + '</h2>');
+  res.end('<h2>Hello, use socketio to connect to me!</h2>');
 });
 
 app.post('/login', auth.post);

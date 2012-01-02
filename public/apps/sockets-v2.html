@@ -2,42 +2,19 @@
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <script type="text/javascript">
 	$(function () {
-    
-		var sio = io.connect('http://' + document.domain + '/thoughts');
-		sio.on('connect', function (data) {
-      sio.emit('sendthoughts', {}, function(result) {
-          console.log(1);
-        });
-      sio.on('thought', function (data) {
-        console.log(JSON.stringify(data));
-      });
-      sio.emit('getthoughts', null);
-			console.log('connected');
+		$.ajax({
+			type: 'POST',
+			url: 'http://' + document.location.host + '/login',
+			data: { username: 'danielwerthen', password: '123456' },
+			datatype: 'json',
+			success: function(result) {
+				if (result.authorized) setTimeout(function() {
+					console.log('authorized');
+				}, 500);
+				else {
+					console.log('unauthorized');
+				}
+			}
 		});
-    sio.on('disconnect', function () {
-      console.log('connection closed');
-    });
-    sio.on('error', function (error){
-      console.log('Unable to connect Socket.IO', JSON.stringify(error));
-      if (error == 'handshake error') {
-        $.ajax({
-          type: 'POST',
-          url: 'http://' + document.domain + '/login',
-          data: { username: 'danielwerthen', password: '123456' },
-          datatype: 'json',
-          success: function (result) {
-            if (result.authorized)
-              sio.socket.connect();
-            else
-              console.log('login failed');
-          }
-        });
-      }
-      else {
-        setTimeout(function () {
-          sio.socket.connect();
-        }, 1000);
-      }
-    });
 	});
 </script>
