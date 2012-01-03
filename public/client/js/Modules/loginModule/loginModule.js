@@ -24,7 +24,7 @@
 		loginFormContainer.dialog({
 			autoOpen: false,
 			height: 300,
-			width: 500,
+			width: 300,
 			modal: true,
 			resizable: false,
 			draggable: false,

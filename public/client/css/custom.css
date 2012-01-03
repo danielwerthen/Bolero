@@ -1,6 +1,16 @@
-h3{font-size:20px; font-weight:bold;}
+@font-face {
+  font-family: 'PT Serif';
+  font-style: normal;
+  font-weight: normal;
+  src: local('PT Serif'), local('PTSerif-Regular'), url('http://themes.googleusercontent.com/static/fonts/ptserif/v3/sDRi4fY9bOiJUbgq53yZCXYhjbSpvc47ee6xR_80Hnw.woff') format('woff');
+}
 
-body{padding-bottom:40px;}
+h3{font-size:20px; font-weight:bold; font-family: 'PT Serif'; margin-bottom:10px;}
+p{ font-family: 'PT Serif'; line-height:125%; font-size:10pt;}
+body{
+background: -webkit-gradient(radial, 50% 50%, 0, 50% 50%, 500, from(rgb(250, 250, 250)), to(rgb(230, 230, 230)));
+    -webkit-font-smoothing: antialiased;
+	}
 
 #maincontent{margin: 20px;}
 
@@ -10,7 +20,14 @@ body{padding-bottom:40px;}
   position:fixed;
   bottom:0px;
   border-top:1px solid #D2D2D2;
-  background-color:#ECECEC;
+  /*background-color:#ECECEC;*/
+  	    background: rgb(215, 215, 215);
+    background: -webkit-gradient(radial, 50% 50%, 0, 50% 50%, 500, from(rgb(240, 240, 240)), to(rgb(190, 190, 190)));
+    background: -webkit-radial-gradient(rgb(240, 240, 240), rgb(190, 190, 190));
+    background:    -moz-radial-gradient(rgb(240, 240, 240), rgb(190, 190, 190));
+    background:      -o-radial-gradient(rgb(240, 240, 240), rgb(190, 190, 190));
+    background:         radial-gradient(rgb(240, 240, 240), rgb(190, 190, 190));
+
   width:100%;
 	}
 	
@@ -54,14 +71,65 @@ body{padding-bottom:40px;}
 	
 /* thought */
 
-.thoughtList {height:230px;}
+/*.thoughtList {height:170px;}*/
 
-.thoughtList .thougth{
+/*
+.thoughtList.thougth{
 	display: inline-block;
 	padding-right: 20px;
-
-	width:350px;min-height:200px;
+	width:350px;
+	min-height:200px;
 	border:1px solid #D2D2D2;
 	margin:10px;
 		
+	}*/
+	
+	.leftSide, .rightSide{
+		
+		display:inline-block;
+		width:49.9%;
 	}
+	
+	/*.leftSide{background-color:#ff0000;}
+	
+	.rightSide{background-color:#ff00ff;}
+	*/
+	.leftSide .thought, .rightSide .thought{
+		position: absolute;
+		padding-right: 20px;
+		width: 425px;
+		min-height:200px;
+		margin:auto;
+		margin-right:10px;
+	}
+	
+	.rightSide .thought p
+	{
+	
+	}
+	
+	.rightSide .thought{
+		opacity:0.3;
+	filter:alpha(opacity=30);
+	}
+	
+	.leftSide .user, .rightSide .user{
+		margin-top:20px;
+		margin-right:35px;
+		text-align:right;
+		font-weight:500;
+		font-style:italic;
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
