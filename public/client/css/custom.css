@@ -69,6 +69,13 @@ background: -webkit-gradient(radial, 50% 50%, 0, 50% 50%, 500, from(rgb(250, 250
 	color:#3F3F3F;
 	}
 	
+	.addButton{
+	
+		margin-left:auto;
+		margin-right:10px;
+		padding:10px 15px;
+	}
+	
 /* thought */
 
 /*.thoughtList {height:170px;}*/
@@ -95,11 +102,10 @@ background: -webkit-gradient(radial, 50% 50%, 0, 50% 50%, 500, from(rgb(250, 250
 	.rightSide{background-color:#ff00ff;}
 	*/
 	.leftSide .thought, .rightSide .thought{
-		position: absolute;
-		padding-right: 20px;
+		
 		width: 425px;
-		min-height:200px;
-		margin:auto;
+		height:200px;
+		margin-left:auto;
 		margin-right:10px;
 	}
 	

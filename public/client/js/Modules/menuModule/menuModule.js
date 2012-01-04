@@ -20,6 +20,23 @@ $.widget( "TestNamespace.menuModule", {
 		buttonContainer.append(submitButton);
 		buttonContainer.append(createButton);
 		
+		
+		/*
+		var createButton = create("Button").button({
+                        icons: {
+                            primary: "ui-icon-plus"
+                        },
+                        text: false
+                        }).addClass("addButton");
+
+		createButton.click(function() { 
+			amplify.publish(interface.messages.openCreateView);
+		});
+
+		buttonContainer.append(createButton);
+		*/
+		
+		
 		this.element.append(buttonContainer);
 			
 		this._refresh();
