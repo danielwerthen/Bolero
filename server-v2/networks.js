@@ -24,6 +24,7 @@ function insertNetwork(title, userId, cb) {
 						.seq(function (collection, network) {
 							collection.update({ _id: userId }, { $addToSet: { networks: network._id }, $inc: { version: 1 } }, { safe: true }, this);
 						})
+						.flush()
 						.join();
 				})
 			.join();
