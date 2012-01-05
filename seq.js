@@ -6,9 +6,12 @@ var tio = require('./server/thoughtio-v3');
 var userService = require('./server/users/userService.js');
 var thoughtService = require('./server/thoughts/thoughtService');
 var linkService = require('./server/links/linkService');
+var data = require('./dataloader.js');
 
-
-var s = xSeq();
+console.log(data.paragraphs[4]);
+console.log(data.getParagraph());
+console.log(data.getTitle());
+/*var s = xSeq();
 
 s
   .seq(function () {
@@ -66,7 +69,7 @@ s
   .unflatten()
   .seq(function (result) {
     console.dir(result);
-  });
+  });*/
 
 
 

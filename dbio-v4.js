@@ -1,5 +1,6 @@
 var mongo = require('mongodb'),
-    xSeq = require('./lib/xSeq');
+    xSeq = require('./lib/xSeq'),
+		types = require('./utils/types.js');
 
 function extend(s, db) {
     function _extend(name) {
@@ -12,7 +13,7 @@ function extend(s, db) {
         return s;
       };
     }
-    
+
     _extend('find');
     _extend('findAndModify');
     _extend('insert');
@@ -26,16 +27,37 @@ function extend(s, db) {
 
     _extend('toArray');
 
+		s._split = s.split;
+		s.split = function (cb) {
+			s._split(function (path) {
+				cb(extend(path, db));
+			});
+			return s;
+		};
+
+		s.expose = db;
+
     s.collection = function (col) {
       s.seq(function () {
-        db.collection(col, this);
+				var args = Array.prototype.slice.call(arguments, 0),
+						self = this;
+        db.collection(col, function (err, collection) {
+					if (err)
+						self(err);
+					else {
+						args.splice(0,0, collection); 
+						args.splice(0,0, null); //its important to add an null (representing empty exception)
+						self.apply(self, args);
+					}
+				});
       });
       return s;
     }
+
   return s;
 }
 
-function dbio() {
+function dbio(open) {
   var self = this,
       username = 'admin',
       password = 'Pass09Word',
@@ -45,6 +67,22 @@ function dbio() {
       options = {};
 
   var db = new mongo.Db(dbname, new mongo.Server(url, port, options));
+
+	if (open) {
+		db.open(function (err, result) {
+			if (err) {
+				open(err);
+				return;
+			}
+			db.authenticate(username, password, function (err, result) {
+				if (result)
+					open(null, db);
+				else
+					open(err);
+			});
+		});
+    return;
+	}
 
   var s = xSeq();
 
@@ -65,6 +103,10 @@ function dbio() {
     s.seq(function () {
       var args = Array.prototype.slice.call(arguments, 0),
           self = this;
+			for (var i in args) {
+				if (types.isArray(args[i]) && args[i].length == 1)
+					args[i] = args[i][0];
+			}
       args.splice(0,0, null); //its important to add an null (representing empty exception)
       db.close(function (err) {
         self.apply(self, args);
