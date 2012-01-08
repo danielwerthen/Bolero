@@ -31,6 +31,7 @@ function insertNetwork(title, userId, cb) {
 		})
     .close()
 		.seq(function (nw) {
+			console.dir(nw);
 			cb(null, nw);
 		})
 		.catch(function (err) {
