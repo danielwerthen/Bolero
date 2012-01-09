@@ -6,7 +6,8 @@ var io = require('socket.io'),
 		sessionStore = new MemoryStore(),
 		Session = require('connect').middleware.session.Session,
 		parseCookie = require('connect').utils.parseCookie,
-		auth = require('./server-v2/auth.js');
+		auth = require('./server-v2/auth.js'),
+		cio = require('./server-v2/conversationsio.js');
 
 
 app.configure(function () {
@@ -69,7 +70,7 @@ sio.set('authorization', function (data, accept) {
 
 sio.of('/bolero').on('connection', function (socket) {
 	var hs = socket.handshake;
-	console.log('A socket opened by user: ' + hs.session.currentUser.username
+	console.log('A socket opened by user: ' + hs.session.currentUser.email
 							+ ' connected');
 
 	var intervalID = setInterval(function () {
@@ -78,7 +79,7 @@ sio.of('/bolero').on('connection', function (socket) {
 		});
 	}, 60 * 1000);
   
-  //tio.setup(socket);
+  cio.setup(socket);
 
 	socket.on('disconnect', function () {
 		console.log('A socket with sessionID ' + hs.sessionID + ' disconnected!');
