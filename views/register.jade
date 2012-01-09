@@ -1,0 +1,12 @@
+form(action='/register', enctype='multipart/form-data', method='post')
+	ul
+		li
+			label Email:
+				input(name='user[email]')
+		li
+			label Password:
+				input(name='user[password]',
+					type='password')
+		li
+			input(value='submit',
+				type='submit')
