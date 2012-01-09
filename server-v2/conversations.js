@@ -1,5 +1,5 @@
 var dbio = require('../dbio-v4.js'),
-		barrier = require('../lib/barrier),
+		barrier = require('../lib/barrier'),
 		types = require('../utils/types');
 
 function newConversation(title, userId, callback) {
@@ -51,6 +51,7 @@ function getConversation(conId, callback) {
 				.findOne({ _id: conId })
 				.seq(function (conv) {
 					callback(null, conv);
+					this(null);
 				})
 				.join();
 		})
@@ -86,11 +87,13 @@ function addMessage(conId, title, message, userId, callback) {
 							if (err)
 								self(err);
 							else {
-								callback(message);
+								callback(null, message);
 								self(null);
 							}
 						});
 				})
+				.collection('users')
+				.update({ _id: userId }, { $addToSet: { conversations: conId }, $inc: { version: 1 } }, { safe: true })
 				.join();
 		})
 		.close()
@@ -99,7 +102,7 @@ function addMessage(conId, title, message, userId, callback) {
 		});
 }
 
-function getMessages(conId, centerMessageId, forward, backward, callback) {
+function getMessages(conId, callback) {
 	if (typeof conId === 'string') conId = types.ObjectId(conId);
 	dbio()
 		.open()
@@ -109,16 +112,18 @@ function getMessages(conId, centerMessageId, forward, backward, callback) {
 				.findOne({ _id: conId })
 				.collection('messages')
 				.seq(function (messages, conv) {
-					var center,
-							_forwards = [],
-							_backwards = [];
-					for (var i in conv.messages) {
-						if (conv.messages[i].messageId === centerMessageid)
-							center = conv.messages[i].linkDate;
+					var self = this;
+					var b = barrier(conv.messages.length, function (err, messages) {
+						if (err)
+							self(err);
+						else {
+							callback(null, messages);
+							self(null, messages);
+						}
+					});
+					for(var i in conv.messages) {
+						messages.findOne({ _id: conv.messages[i].messageId }, b);
 					}
-					if (!center)
-						callback('Message not found');
-					
 				})
 				.join();
 		})
@@ -127,3 +132,8 @@ function getMessages(conId, centerMessageId, forward, backward, callback) {
 			callback(err);
 		});
 }
+
+exports.new = newConversation; // (title, userId, callback)
+exports.get = getConversation; // (conversationId, callback)
+exports.getMessages = getMessages; // (conversationId, callback)
+exports.addMessage = addMessage; // (conversationId, title, message, userId, callback)
