@@ -1,16 +1,17 @@
-var Seq = require('seq');
-var dbio = require('./dbio-v3.js');
-var barrier = require('./lib/barrier');
-var xSeq = require('./lib/xSeq');
-var tio = require('./server/thoughtio-v3');
-var userService = require('./server/users/userService.js');
-var thoughtService = require('./server/thoughts/thoughtService');
-var linkService = require('./server/links/linkService');
-var data = require('./dataloader.js');
+var data = require('./dataloader.js'),
+		users = require('./server-v2/users.js'),
+		convos = require('./server-v2/conversations.js');
 
-console.log(data.paragraphs[4]);
-console.log(data.getParagraph());
-console.log(data.getTitle());
+users.getByEmail('danielwerthen@gmail.com', function (err, user) {
+	convos.new(data.getTitle(), user._id, function (err, convo) {
+		for(var i = 0; i < 15; i++) {
+			convos.addMessage(convo._id, data.getTitle(), data.getParagraph(), user._id, function (err, message) {
+				console.dir(message);
+			});
+		}
+	});
+});
+
 /*var s = xSeq();
 
 s

@@ -1,31 +1,38 @@
-<script type="text/javascript" src="/socket.io/socket.io.js"></script>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-<script type="text/javascript">
-	function setupSocket() {
-		var sio = io.connect('http://' + document.location.host + '/bolero');
-		sio
-			.on('connect', function () {
-				console.log('connected');
+<html>
+	<head>
+		<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+		<script type="text/javascript">
+			function setupSocket() {
+				var sio = io.connect('http://' + document.location.host + '/bolero');
+				sio
+					.on('connect', function () {
+						console.log('connected');
 
-				sio.emit('getConversations', {}, function (conversations) {
-					console.log('found ' + conversations.length + ' conversations!');
+						sio.emit('getConversations', {}, function (conversations) {
+							console.log('found ' + conversations.length + ' conversations!');
+						});
 				});
-		});
-	}
-	$(function () {
-		$.ajax({
-			type: 'POST',
-			url: 'http://' + document.location.host + '/login',
-			data: { email: 'danielwerthen@gmail.com', password: '123456' },
-			datatype: 'json',
-			success: function(result) {
-				if (result.authorized) setTimeout(function() {
-					setupSocket();
-				}, 500);
-				else {
-					console.log('unauthorized');
-				}
 			}
-		});
-	});
-</script>
+			$(function () {
+				$.ajax({
+					type: 'POST',
+					url: 'http://' + document.location.host + '/login',
+					data: { email: 'danielwerthen@gmail.com', password: '123456' },
+					datatype: 'json',
+					success: function(result) {
+						if (result.authorized) setTimeout(function() {
+							setupSocket();
+						}, 500);
+						else {
+							console.log('unauthorized');
+						}
+					}
+				});
+			});
+		</script>
+	</head>
+	<div>
+		hello world
+	</div>
+</html>

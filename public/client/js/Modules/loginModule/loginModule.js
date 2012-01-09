@@ -13,8 +13,8 @@
 				
 				var thoughtForm = create("form").append(create("fieldset"));
 				
-				thoughtForm.append(create("label").attr({"for":"username"}).text("username"));
-				thoughtForm.append(create("input").attr({"type":"text","name":"username","id":"username"}).addClass('text ui-widget-content ui-corner-all').width("100%"));
+				thoughtForm.append(create("label").attr({"for":"email"}).text("email"));
+				thoughtForm.append(create("input").attr({"type":"text","name":"email","id":"email"}).addClass('text ui-widget-content ui-corner-all').width("100%"));
 				
 				thoughtForm.append(create("label").attr({"for":"content"}).text("password"));
     			thoughtForm.append(create("input").attr({"type":"password","name":"password","id":"password"}).addClass('text ui-widget-content ui-corner-all').width("100%"));
@@ -35,11 +35,11 @@
 			buttons: {
 				"Login": function() 
 				{
-					var loginobject = {"username":$("#username").val(),"password":$("#password").val()};
+					var loginobject = {"email":$("#email").val(),"password":$("#password").val()};
 					
 						 amplify.publish(interface.messages.login, loginobject );
 						 loginobject = null;
-						 $("#username").val("");
+						 $("#email").val("");
 						 $("#password").val("");
 						 $(this).dialog("close"); 
 				},

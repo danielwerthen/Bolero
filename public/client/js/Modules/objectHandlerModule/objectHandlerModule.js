@@ -1,6 +1,6 @@
 function initSocket(thisWidget) {
   console.log('connecting to ' + document.domain );
-  var sio = io.connect('http://' + document.location.host + '/thoughts');
+  var sio = io.connect('http://' + document.location.host + '/bolero');
   sio.on('connect', function() {
     console.log('connected');
     
@@ -25,9 +25,23 @@ function initSocket(thisWidget) {
         }
       });*/
       
-      sio.emit('getlatestthought', {userId:"4ed54e1a3733af7234000001"}, function(thoughts) {
+      /*sio.emit('getlatestthought', {userId:"4ed54e1a3733af7234000001"}, function(thoughts) {
           thisWidget.addThought(thoughts);
-      });
+      });*/
+			console.log('load convos');
+			sio.emit('getConversations', {}, function (convos) {
+				if (!convos || convos.length === 0) {
+					//add conversation
+					console.log('no convo');
+				}
+				else {
+					var convo1 = convos[1];
+					sio.emit('getMessages', { conversationId: convo1._id }, function (messages) {
+						for (var i in messages)
+							thisWidget.addThought(messages[i]);
+					});
+				}
+			});
     });
 
     amplify.subscribe(messages.thought.create, function(thought, parentThought) {

@@ -50,6 +50,25 @@ function getUser(userId, callback) {
 		});
 }
 
+function getUserByEmail(email, callback) {
+	dbio()
+		.open()
+		.path(function (db) {
+			db
+				.collection('users')
+				.findOne({ email: email })
+				.seq(function (user) {
+					callback(null, user);
+					this(null);
+				})
+				.join();
+		})
+		.close()
+		.catch(function (err) {
+			callback(err);
+		});
+}
+
 function getConversations(userId, callback) {
 	if (typeof userId === 'string') userId = types.ObjectId(userId);
 	dbio()
@@ -85,3 +104,4 @@ function getConversations(userId, callback) {
 exports.new = newUser; // (email, callback)
 exports.get = getUser; // (userId, callback)
 exports.getConversations = getConversations; // (userId, callback)
+exports.getByEmail = getUserByEmail; // (email, callback)
