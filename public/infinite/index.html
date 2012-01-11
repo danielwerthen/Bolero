@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>jmpress.js | a jQuery plugin to build a website on the infinite canvas</title>
+
+	<meta name="description" content="jmpress.js is jQuery port of https://github.com/bartaz/impress.js based on the power of CSS3 transforms and transitions in modern browsers and inspired by the idea behind prezi.com.">
+	<meta name="author" content="Kyle Robinson Young @shama" />
+	<meta name="viewport" content="width=device-width, maximum-scale=1.0, initial-scale=1.0, user-scalable=yes" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+	<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/excite-bike/jquery-ui.css" rel="stylesheet" />
+	<link href="css/style.css" rel="stylesheet" />
+	<style>
+		@font-face {
+			font-family: 'PT Serif';
+			font-style: normal;
+			font-weight: normal;
+			src: local('PT Serif'), local('PTSerif-Regular'), url('http://themes.googleusercontent.com/static/fonts/ptserif/v3/sDRi4fY9bOiJUbgq53yZCXYhjbSpvc47ee6xR_80Hnw.woff') format('woff');
+		}
+
+		h3{font-size:20px; font-weight:bold; font-family: 'PT Serif'; margin-bottom:10px;}
+		p{ font-family: 'PT Serif'; line-height:125%; font-size:10pt;}
+	</style>
+</head>
+<body class="ui-state-default">
+
+	<!--
+<ul id="nav">
+	<li><a href="#about">ABOUT</a></li>
+	<li><a href="#download">DOWNLOAD</a></li>
+	<li><a href="#docs">DOCS</a></li>
+	<li><a href="#contribute">CONTRIBUTE</a></li>
+</ul>-->
+
+<div id="jmpress">
+
+	<!--
+	<div id="about" class="step" data-x="-900" data-y="-1500">
+		<h4>introducing</h4>
+		<h1>jmpress.js</h1>
+		<p>a jQuery plugin to build a website on the infinite canvas</p>
+		<span class="ui-icon ui-icon-star"></span>
+		<a href="#" class="next">next &gt;</a>
+	</div>
+
+	<div id="about-port" class="step" data-x="-950" data-y="-1000" data-rotate="20">
+		<h4>a jQuery port of</h4>
+		<div class="impress"><a href="http://bartaz.github.com/impress.js/" target="_blank">impress.js*</a><sup>created by Bartek Szopka</sup></div>
+		<p>but with a different goal in mind. Why keep it behind a podium? Let's make websites!</p>
+		<a href="#" class="next">next &gt;</a>
+	</div>
+
+	<div id="about-jquery" class="step" data-x="-900" data-y="-500">
+		<h1>why jQuery?</h1>
+		<ul>
+			<li>great plugin framework that is familiar to a lot of people</li>
+			<li>easier to add and maintain features</li>
+			<li>wouldn't be surprised if CSS3 transforms/itions are later supported</li>
+			<li>Fallback to <i>.animate()</i> when needed</li>
+			<li>jQuery UI themes</li>
+			<li>easier to implement ajax into slides</li>
+			<li>jQuery mobile for adding touch support</li>
+		</ul>
+		<h3>So why not?</h3>
+		<a href="#" class="next">next &gt;</a>
+	</div>
+
+	<div id="about-impress" class="step" data-x="-950" data-y="100" data-rotate="20">
+		<h4>why not contribute to the</h4>
+		<h1>original?</h1>
+		<p>I have contributed and will continue to send pull requests :)<br/>
+		@bartaz has a very specific vision for impress.js which I respect.<br/>
+		<br/>
+		Plus I asked him and he <a href="https://twitter.com/#!/bartaz/status/156123781037957123" target="_blank">said no</a>.</p>
+		<a href="#" class="next">next &gt;</a>
+	</div>
+
+    <div id="download" class="step" data-x="0" data-y="-1500" data-rotate="-90">
+		<h1>download</h1>
+		<p>Download, clone, submodule or fork on <a href="https://github.com/shama/jmpress.js/">github</a></p>
+		<span class="ui-icon ui-icon-arrowthick-1-s"></span>
+		<a href="#" class="next">next &gt;</a>
+    </div>
+
+	<div id="docs" class="step" data-x="1000" data-y="-1500" data-rotate="-180">
+		<h1>docs</h1>
+		<p>Available <a href="https://github.com/shama/jmpress.js">in the readme</a> for now</p>
+		<span class="ui-icon ui-icon-document"></span>
+		<a href="#" class="next">next &gt;</a>
+	</div>
+
+	<div id="contribute" class="step" data-x="2000" data-y="-1500">
+		<h1>contribute</h1>
+		<p>Good news! I accept pull requests ;)</p>
+		<p>Please pull against the <i>dev</i> branch. Thanks!</p>
+		<span class="ui-icon ui-icon-person"></span>
+		<a href="#" class="next">next &gt;</a>
+	</div>
+
+	<div id="contribute-tests" class="step" data-x="2000" data-y="-1000" data-rotate="20">
+		<h1>tests</h1>
+		<p>jmpress.js uses the <a href="http://pivotal.github.com/jasmine/" target="_blank">jasmine bdd</a> library for testing. Please load <i>test.html</i> in your browser to run the tests.</p>
+		<a href="#" class="next">next &gt;</a>
+	</div>
+
+	<div id="contribute-wishlist" class="step" data-x="2000" data-y="-500">
+		<h1>wishlist</h1>
+		<ul>
+			<li>Browser Support (hard but important)</li>
+			<li>Better fallback support for older browsers</li>
+			<li>Mobile/Touch (use jQuery mobile)</li>
+			<li>Integrate an option for jQuery UI theme support</li>
+		</ul>
+		<a href="#" class="next">next &gt;</a>
+	</div>
+	-->
+
+</div>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script type="text/javascript" src="js/jmpress.js"></script>
+<script type="text/javascript">
+</script>
+		<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+		<script type="text/javascript">
+			function impressMe() {
+				$('#jmpress').jmpress({
+					beforeChange: function( slide ) {
+						var id = slide.attr('id');
+						if (id.indexOf('-') != -1) {
+							id = id.substr(0, id.indexOf('-'));
+						}
+						$('#nav a').removeClass( 'active' );
+						$('#nav a[href=#' + id + ']').addClass( 'active' );
+					}
+				});
+				$('.next').click(function() {
+					$('#jmpress').jmpress('next');
+					return false;
+				});
+			}
+			function handleMessages(messages) {
+				var x = -1500;
+				var r = 10;
+				for( var i in messages) {
+					console.log(messages[i].title);
+					var step = $('<div>', {
+								'id': messages[i].title,
+								'class': 'step',
+								'data-x': x,
+								'data-y': '0',
+							});
+					x += 1000;
+					step.append($('<h3>', {
+								text: messages[i].title
+							}));
+					step.append($('<p>', {
+								text: messages[i].message
+							}));
+					$('#jmpress').append(step);
+				}
+				impressMe();
+			}
+			function setupSocket() {
+				var sio = io.connect('http://' + document.location.host + '/bolero');
+				sio
+					.on('connect', function () {
+						console.log('connected');
+
+						sio.emit('getConversations', {}, function (conversations) {
+							console.log('found ' + conversations.length + ' conversations!');
+							for(var i in conversations) {
+								if (conversations[i].messages.length > 0) {
+									var c = conversations[i];
+
+									sio.emit('getMessages', { conversationId: c._id }, handleMessages);
+									break;
+								}
+							}
+						});
+				});
+			}
+			$(function () {
+				$.ajax({
+					type: 'POST',
+					url: 'http://' + document.location.host + '/login',
+					data: { email: 'danielwerthen@gmail.com', password: '123456' },
+					datatype: 'json',
+					success: function(result) {
+						if (result.authorized) setTimeout(function() {
+							setupSocket();
+						}, 500);
+						else {
+							console.log('unauthorized');
+						}
+					}
+				});
+			});
+		</script>
+
+</body>
+</html>
