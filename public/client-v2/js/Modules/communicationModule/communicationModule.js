@@ -73,24 +73,24 @@ function initSocket(thisWidget) {
 			});
     });
     
-    amplify.subscribe(messages.interface.login, function(logindata) {
-      $.ajax({
-        type: 'POST',
-        url: 'http://' + document.location.host + '/login',
-        data: logindata,
-        datatype: 'json',
-        success: function(result) {
-          if (result.authorized) setTimeout(function() {
-            sio.socket.connect();
-          }, 500);
-          else amplify.publish(messages.interface.openLoginView);
-        }
-      });
-    });
     	
     
   });
 
+	amplify.subscribe(messages.interface.login, function(logindata) {
+		$.ajax({
+			type: 'POST',
+			url: 'http://' + document.location.host + '/login',
+			data: logindata,
+			datatype: 'json',
+			success: function(result) {
+				if (result.authorized) setTimeout(function() {
+					sio.socket.connect();
+				}, 500);
+				else amplify.publish(messages.interface.openLoginView);
+			}
+		});
+	});
   
   sio.on('error', function(error) {
     console.log('connection failed due to ' + error);
