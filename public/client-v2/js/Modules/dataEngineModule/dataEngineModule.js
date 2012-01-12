@@ -8,15 +8,40 @@ $.widget( "TestNamespace.dataEngineModule", {
 			
 			var thisWidget = this;					
 			
-            
-             amplify.subscribe(messages.interface.loadConversations, function(arg) {
-                 amplify.publish(messages.conversation.request);
-            });
-            
+			amplify.subscribe(messages.interface.loadConversations, function(arg) {
+				amplify.publish(messages.conversation.request);
+		    });
+			
+			amplify.subscribe(messages.conversation.recieve, function(conversation) {
+          		if(conversation._id !== undefined && conversation._id)
+          		{
+          			if(thisWidget.conversations[conversation._id] === undefined )
+          			{
+          				thisWidget.conversations[conversation._id]= conversation;
+          				amplify.publish(messages.conversation.add,conversation);
+          				
+          				if(conversation.messages !== undefined)
+	          			{
+	          				for (var i in conversation.messages)
+								amplify.publish(messages.message.request,conversation.messages[i]);
+	          			}
+          				
+          			}
+          			else
+          			{
+          				thisWidget.conversations[conversation._id]= conversation;
+          				amplify.publish(messages.conversation.update,conversation);
+          			}          			
+          		}
+          		
+          		
+    		});
+					
+								
 			amplify.subscribe(messages.message.recieve, function(message) {
           		if(message._id !== undefined && message._id)
           		{
-          			if(thisWidget.messages[message._id] !== undefined )
+          			if(thisWidget.messages[message._id] === undefined )
           			{
           				thisWidget.messages[message._id]= message;
           				amplify.publish(messages.message.add,message);

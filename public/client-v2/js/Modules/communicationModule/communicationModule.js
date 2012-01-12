@@ -61,36 +61,52 @@ function initSocket(thisWidget) {
 				}
 				else {
 					var convo1 = convos[1];
-                    amplify.publish(messages.conversation.recieve,convo1);
-				
-                //--------------denna hantering bör flyttas till data engine och göras ett request per messageId istället
-                sio.emit('getMessages', { conversationId: convo1._id }, function (messagelist) {
+					
+					amplify.publish(messages.conversation.recieve,convo1);
+					
+					/*sio.emit('getMessages', { conversationId: convo1._id }, function (messagelist) {
 						for (var i in messagelist)
 							amplify.publish(messages.message.recieve,messagelist[i]);
-					});
+					});*/
 				}
-                //-------------------
 			});
     });
     
+    
+      amplify.subscribe(messages.message.request, function(arg) {
+			sio.emit('getMessage', arg, function (recievedMessage) {
+				if (!recievedMessage || recievedMessage === 0) {
+					//add conversation
+					console.log('no recievedMessage');
+				}
+				else {
+							amplify.publish(messages.message.recieve,recievedMessage);
+				}
+			});
+    });
+
+    
+    
+    
+    
+        amplify.subscribe(messages.interface.login, function(logindata) {
+      $.ajax({
+        type: 'POST',
+        url: 'http://' + document.location.host + '/login',
+        data: logindata,
+        datatype: 'json',
+        success: function(result) {
+          if (result.authorized) setTimeout(function() {
+            sio.socket.connect();
+          }, 500);
+          else amplify.publish(messages.interface.openLoginView);
+        }
+      });
+    });
     	
     
   });
 
-	amplify.subscribe(messages.interface.login, function(logindata) {
-		$.ajax({
-			type: 'POST',
-			url: 'http://' + document.location.host + '/login',
-			data: logindata,
-			datatype: 'json',
-			success: function(result) {
-				if (result.authorized) setTimeout(function() {
-					sio.socket.connect();
-				}, 500);
-				else amplify.publish(messages.interface.openLoginView);
-			}
-		});
-	});
   
   sio.on('error', function(error) {
     console.log('connection failed due to ' + error);
