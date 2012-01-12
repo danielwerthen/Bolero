@@ -13,6 +13,14 @@ var messages = {
 		recieve:"message.recieve",
 		request:"message.request"	
 	},
+    conversation :{
+		add:"conversation.add",
+		remove:"conversation.remove",
+		create:"conversation.create",
+		update:"conversation.update",
+		recieve:"conversation.recieve",
+		request:"conversation.request"	
+	},
     user : {
 		add:"user.add",
         get:"user.get",

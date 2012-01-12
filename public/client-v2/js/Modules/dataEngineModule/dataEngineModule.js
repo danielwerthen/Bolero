@@ -7,7 +7,12 @@ $.widget( "TestNamespace.dataEngineModule", {
 			_create: function() {
 			
 			var thisWidget = this;					
-								
+			
+            
+             amplify.subscribe(messages.interface.loadConversations, function(arg) {
+                 amplify.publish(messages.conversation.request);
+            });
+            
 			amplify.subscribe(messages.message.recieve, function(message) {
           		if(message._id !== undefined && message._id)
           		{

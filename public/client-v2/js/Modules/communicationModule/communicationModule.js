@@ -53,7 +53,7 @@ function initSocket(thisWidget) {
     });
 
     //subscribe to mediator updates
-    amplify.subscribe(messages.interface.loadConversations, function(arg) {
+    amplify.subscribe(messages.conversation.request, function(arg) {
 			sio.emit('getConversations', {}, function (convos) {
 				if (!convos || convos.length === 0) {
 					//add conversation
@@ -61,15 +61,19 @@ function initSocket(thisWidget) {
 				}
 				else {
 					var convo1 = convos[1];
-					sio.emit('getMessages', { conversationId: convo1._id }, function (messagelist) {
+                    amplify.publish(messages.conversation.recieve,convo1);
+				
+                //--------------denna hantering bör flyttas till data engine och göras ett request per messageId istället
+                sio.emit('getMessages', { conversationId: convo1._id }, function (messagelist) {
 						for (var i in messagelist)
 							amplify.publish(messages.message.recieve,messagelist[i]);
 					});
 				}
+                //-------------------
 			});
     });
     
-        amplify.subscribe(messages.interface.login, function(logindata) {
+    amplify.subscribe(messages.interface.login, function(logindata) {
       $.ajax({
         type: 'POST',
         url: 'http://' + document.location.host + '/login',
