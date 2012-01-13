@@ -29,11 +29,6 @@ $.widget( "TestNamespace.communicationModule", {
 								var convo1 = convos[1];
 								
 								amplify.publish(messages.conversation.recieve,convo1);
-								
-								/*sio.emit('getMessages', { conversationId: convo1._id }, function (messagelist) {
-									for (var i in messagelist)
-										amplify.publish(messages.message.recieve,messagelist[i]);
-								});*/
 							}
 						});
 			    });
@@ -45,7 +40,7 @@ $.widget( "TestNamespace.communicationModule", {
 								console.log('no recievedMessage');
 							}
 							else {
-										amplify.publish(messages.message.recieve,recievedMessage);
+								amplify.publish(messages.message.recieve,recievedMessage);
 							}
 						});
 			    });
