@@ -1,7 +1,8 @@
 define(
 	[ "jquery"
 	, "lib/dataEngine" 
-	, "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js" ]
+	, "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js" 
+	, "lib/conversation" ]
 	, function ($, dataEngine) {
 		$.widget( "Bolero.conversationContainer", 
 			{ _create:
@@ -16,10 +17,12 @@ define(
 				function (convos) {
 					console.log('works');
 					for (var i in convos) {
-						this.element.append('<div>' + convos[i].title + '</div>');
+						var c = $('<div></div>').conversation();
+						c.conversation('load', convos[i]);
+						this.element.append(c);
 					}
 				}
 	
-		});
+			});
 	}
 );
