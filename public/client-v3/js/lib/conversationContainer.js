@@ -9,13 +9,12 @@ define(
 				function () {
 					var self = this;
 					dataEngine.emit('getConversations', {}, function (convos) {
-						console.log('got convos');
+						console.log('got conversations');
 						self.load(convos);
 					});
 				}
 			, load:
 				function (convos) {
-					console.log('works');
 					for (var i in convos) {
 						var c = $('<div></div>').conversation();
 						c.conversation('load', convos[i]);

@@ -6,6 +6,7 @@ define(
 			, queue = [];
 
 		sio.on('connect', function () {
+			console.log('connected through socket.io');
 			connected = true;
 			for (var i in queue) {
 				queue[i]();
