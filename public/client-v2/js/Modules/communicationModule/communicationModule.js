@@ -1,15 +1,18 @@
 $.widget( "TestNamespace.communicationModule", {
 			// default options
 			options: {
-			},
+			}
+			,
 			
 			// the constructor
 			_create: function() {
 			
 			var thisWidget = this;					
-							
+			
+			//refactor sio to become a class variable				
 			var sio = thisWidget.initSocket(thisWidget);				
-									
+			// refactor login to own function
+			// refactor object communication to own function						
 			this._refresh();
 			},	
 			initSocket: function(thisWidget) {

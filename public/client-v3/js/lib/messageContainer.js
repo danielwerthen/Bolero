@@ -7,10 +7,11 @@ define(
 	, function ($, dataEngine) {
 		var instances = []
 			, container = {
-			load: function (conversation) {
+			load: function (conversation) {			
 							var self = this
 								, x = -1500
 								, messages = conversation.messages;
+								
 							messages.sort(function (a, b) {
 								if (a.linkDate === b.linkDate)
 									return 0;

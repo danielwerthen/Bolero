@@ -9,7 +9,7 @@ define(
 							dataEngine.emit('getMessage'
 								, { messageId: messageId }
 								, function (messageData) {
-									$('<h2>' + messageData.title + '</h2>').appendTo(self.element);
+									$('<h3>' + messageData.title + '</h3>').appendTo(self.element);
 									$('<p>' + messageData.message + '</p>').appendTo(self.element);
 								});
 						}

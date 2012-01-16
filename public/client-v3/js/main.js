@@ -9,7 +9,7 @@ require(
 				[ "lib/conversationContainer" 
 				, "lib/messageContainer" ]
 				, function () {
-					$('#conversations').conversationContainer();
+					$('#conversationContainer').conversationContainer();
 					$('#messages').messageContainer();
 				}
 			);

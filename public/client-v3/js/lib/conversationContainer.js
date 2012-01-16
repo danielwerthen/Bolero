@@ -5,20 +5,21 @@ define(
 	, "lib/conversation" ]
 	, function ($, dataEngine) {
 		$.widget( "Bolero.conversationContainer", 
-			{ _create:
+			{_create:
 				function () {
-					var self = this;
+					var _self = this;
 					dataEngine.emit('getConversations', {}, function (convos) {
 						console.log('got conversations');
-						self.load(convos);
+						_self.load(convos);
 					});
 				}
 			, load:
 				function (convos) {
+					var _self = this;
 					for (var i in convos) {
-						var c = $('<div></div>').conversation();
+						var c = $('<div/>').conversation();
 						c.conversation('load', convos[i]);
-						this.element.append(c);
+						_self.element.append(c);
 					}
 				}
 	
