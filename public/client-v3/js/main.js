@@ -7,10 +7,12 @@ require(
     $(function() {
 			require(
 				[ "lib/conversationContainer" 
-				, "lib/messageContainer" ]
+				, "lib/messageContainer" 
+				, "lib/messageDropZone" ]
 				, function () {
 					$('#conversationContainer').conversationContainer();
 					$('#messages').messageContainer();
+					$('#messageDropZone').messageDropZone();
 				}
 			);
     });
