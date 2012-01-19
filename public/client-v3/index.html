@@ -3,11 +3,22 @@
 	<head>
 		<title>Bolero</title>
 		<link rel="stylesheet" href="css/main.css">
+		<link rel="stylesheet" href="css/cssreset.css">
 		<script data-main="js/main.js" src="js/require-jquery.js"></script>
 	</head>
 	<body>
-		<h1>Bolero</h1>
-		<div id="conversations"></div>
-		<div id="messages"></div>
+		<div id="menu">
+			<div id="conversationContainer"></div>
+			<div id="buttonContainer">
+				<div class="button">add</div>
+			</div>
+		</div>
+		<div id="page">
+			<div id="mainContent">
+				<div id="messages"></div>
+			</div>
+			<ul id="messageDropZone">
+			</ul>
+		</div>	
 	</body>
 </html>

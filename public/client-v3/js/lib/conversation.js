@@ -4,18 +4,25 @@ define(
 	, "lib/messageContainer"
 	, "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js" ]
 	, function ($, dataEngine, messageContainer) {
-		var convo = {
+		var convo = { 
 			_create: function () {
-								 var self = this;
-								 this.element.addClass('conversation');
-								 this.element.click(function () {
-									 messageContainer.load(self.options.conversation);
-								 });
-							 }
+				var _self = this;	
+				_self.element.addClass('conversation');
+				 _self.element.click(function () {
+					messageContainer.load(_self.options.conversation);
+				});
+			}
 			, load: function (conversation) {
-								this.element.append('<p>' + conversation.title + '</p>');
-								this.options.conversation = conversation;
-							}
+				var _self = this;
+				_self.options.conversation = conversation;
+								
+				var buttonIndicator = $("<div />").addClass("conversationSelectionIndicator");		
+				var buttonText = $("<p />").text(conversation.title).addClass("conversationText");
+					
+				_self.element.append(buttonIndicator);
+				_self.element.append(buttonText);
+				
+			}
 			, options: {
 				conversation: null
 			}

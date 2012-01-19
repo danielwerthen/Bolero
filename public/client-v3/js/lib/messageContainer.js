@@ -2,15 +2,14 @@ define(
 	[ "jquery"
 	, "lib/dataEngine"
 	, "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"
- 	, "lib/message"	
-	, "ext/jmpress" ]
+ 	, "lib/message"	]
 	, function ($, dataEngine) {
 		var instances = []
 			, container = {
-			load: function (conversation) {
+			load: function (conversation) {			
 							var self = this
-								, x = -1500
 								, messages = conversation.messages;
+								
 							messages.sort(function (a, b) {
 								if (a.linkDate === b.linkDate)
 									return 0;
@@ -19,24 +18,12 @@ define(
 							self.element.empty();
 							for (var i in messages) {
 								var m = $('<div></div>'
-									, { 'class': 'step'
-										, 'id': i
-										, 'data-x': x
-										, 'data-y': 0
+									, { 'id': i
 									})
 									.message()
 									.message('load', messages[i].messageId)
 									.appendTo(self.element);
-									x += 1000;
 							}
-							self.element.jmpress({
-								beforeChange: function ( slide ) {
-																var id = slide.attr('id');
-																if (id.indexOf('-') != -1) {
-																	id = id.substr(0, id.indexOf('-'));
-																}
-															}
-							});
 						}
 			, destroy: function () {
 								 var i = instances.indexOf(this);
