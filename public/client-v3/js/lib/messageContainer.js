@@ -23,7 +23,7 @@ define(
 			item.empty();
 			var m = $('<div></div>')
 				.message()
-				.message('load', data.messageId)
+				.message('load', data)
 				.appendTo(item);
 		}
 
@@ -34,6 +34,10 @@ define(
 					return 0;
 				return a.linkDate >= b.linkDate ? 1 : -1;
 			});
+			messages.push(
+				{ editable: true
+				, messageId: 0
+				});
 			self.element.smoothContainer({ items: messages });
 		}
 

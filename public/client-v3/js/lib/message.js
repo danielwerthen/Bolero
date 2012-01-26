@@ -3,24 +3,37 @@ define(
 	, "lib/dataEngine"
 	, "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js" ]
 	, function ($, dataEngine) {
-		var message = {
-			load: function (messageId) {
-				var self = this;
-				self.element.html('loading');
+		function makeDraggable(element) {
+			element.draggable({
+				cursorAt: { top: 0, left: -25 }
+				, helper: function (event) {
+					return $('div class="message-draggable-helper"><h3>Drag!</h3></div>');
+				}
+			});
+		}
+		function renderMessage(element, data) {
+			if (data.editable) {
+				$('<h3><input type="text">Title</input></h3').appendTo(element);
+				$('<p><input type="text">Message</input></h3').appendTo(element);
+				makeDraggable(element);
+			}
+			else {
+				element.html('loading');
 				dataEngine.emit('getMessage'
-					, { messageId: messageId }
-					, function (messageData) {
-						self.options.data = messageData;
-						self.element.empty();
-						$('<h3>' + messageData.title + '</h3>').appendTo(self.element);
-						$('<p>' + messageData.message + '</p>').appendTo(self.element);
-						self.element.draggable({
-							cursorAt: { top: 0, left: -25 }
-							, helper: function (event) {
-								return $('<div class="message-draggable-helper"><h3>' + messageData.title + '</h3></div>');
-							}
-						});
-					});
+					, { messageId: data.messageId }
+					, function (message) {
+						element.empty();
+						$('<h3>' + message.title + '</h3>').appendTo(element);
+						$('<p>' + message.message + '</p>').appendTo(element);
+						makeDraggable(element);
+					}
+				);
+			}
+		}
+		var message = {
+			load: function (message) {
+				var self = this;
+				renderMessage(self.element, message);
 			}
 			, itemify: function () {
 				return $('<il class="message-item">' + this.options.data.title + '</il>');

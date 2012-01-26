@@ -113,17 +113,26 @@
 	}
 
 #mainContent{
-	height:100%; 
-	width:80%;
 	display: inline-block;
-	}
+	width: 73.9%;
+	margin-left: 4.4%;
+	position: absolute;
+	bottom: 60px;
+	left: 0px;
+	top: 0px;
+	overflow: hidden;
+}
+
 #messageDropZone{
-	height:333px; 
-	width:150px;
-	background: gray;
-	float: right;
 	display: inline-block;
-	}
+	width: 21.68%;
+	position: absolute;
+	bottom: 60px;
+	top: 0px;
+	right: 0px;
+	opacity: 0.7;
+	overflow: hidden;
+}
 
 #messages {
 	height: 100%;
