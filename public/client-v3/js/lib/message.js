@@ -6,10 +6,12 @@ define(
 		var message = {
 			load: function (messageId) {
 				var self = this;
+				self.element.html('loading');
 				dataEngine.emit('getMessage'
 					, { messageId: messageId }
 					, function (messageData) {
 						self.options.data = messageData;
+						self.element.empty();
 						$('<h3>' + messageData.title + '</h3>').appendTo(self.element);
 						$('<p>' + messageData.message + '</p>').appendTo(self.element);
 						self.element.draggable({

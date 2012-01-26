@@ -115,19 +115,19 @@
 #mainContent{
 	height:100%; 
 	width:80%;
-	max-width:500px;
 	display: inline-block;
 	}
 #messageDropZone{
 	height:333px; 
 	width:150px;
-	background: red;
+	background: gray;
 	float: right;
 	display: inline-block;
 	}
 
 #messages {
-	overflow: scroll;
+	height: 100%;
+	margin-bottom: 50px;
 }
 
 

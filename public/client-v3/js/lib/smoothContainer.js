@@ -1,8 +1,8 @@
-//define(
-	//[ "jquery"
-	//, "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js" ]
-	//, 
-	(function ($) {
+define(
+	[ "jquery"
+	, "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js" ]
+	, 
+	function ($) {
 		var centerIndex = 0
 			, self = null
 			, container = {};
@@ -20,32 +20,25 @@
 				item.css( 
 					{ 'position': 'absolute'
 					, '-webkit-transition-duration': '500ms'
+					, '-moz-transition-duration': '500ms'
+					, '-o-transition-duration': '500ms'
 					, 'opacity': (i == -2 || i == 2 ? 0 : 1 )
 					});
 				item.data('index', i);
 				item.data('dirty', true);
 				self.element.append(item);
 			}
-			self._layout();
-			self._render();
 			$(document).keydown(_keydown);
 			$(window).resize(function () {
 				self._layout();
+				self._render(true);
 			});
-			window.addEventListener("hashchange", function () {
-				var id = _getIdFromUrl();
-				self.select(id);
-			}, false);
 		}
 
 		function _init() {
-			console.log('init');
 			centerIndex = 0;
-			self.element.children().each(function () {
-				$(this).data('dirty', true);
-			});
 			self._layout();
-			self._render();
+			self._render(true);
 		}
 
 		function next() {
@@ -95,10 +88,13 @@
 			self.element.children().each(function () {
 				var item = $(this)
 					, i = item.data('index')
-					, x = (i + 1 ) * step
+					, x = (i + 1 ) * step * self.options.xScale
 					, trans = 'translate(' + x + 'px, ' + y + 'px)';
 				item.css({
 					'-webkit-transform': trans
+					, '-ms-transform': trans
+					, '-moz-transform': trans
+					, '-o-transform': trans
 				});
 				if (i === -2 || i === 2)
 					item.css({ 'opacity': 0 });
@@ -106,14 +102,13 @@
 					item.css({ 'opacity': 1 });
 				x+=step;
 			});
-			window.location.hash = "#/" + centerIndex;
 		}
 
-		function _render() {
+		function _render(refresh) {
 			self.element.children().each(function () {
 				var item = $(this)
 					, i = item.data('index') + centerIndex;
-				if (!item.data('dirty'))
+				if (!item.data('dirty') && !refresh)
 					return;
 				if (i >= 0 && i < self.options.items.length) {
 					self.options.render.call(item, self.options.items[i]);
@@ -125,16 +120,21 @@
 			});
 		}
 
+		function push(data) {
+			self.options.items.push(data);
+			self.select(self.options.items.length - 1);
+		}
+
 		function select(id) {
 			if (centerIndex === id)
 				return;
 			centerIndex = id;
 			self._layout();
-			self._render();
+			self._render(true);
 		}
 
 		function _getIdFromUrl() {
-			return window.location.hash.replace(/^#\/?/,"");
+			return Number(window.location.hash.replace(/^#\/?/,""));
 		}
 
 		container = {
@@ -145,14 +145,15 @@
 			, next: next
 			, prev: prev
 			, select: select
+			, push: push
 			, options: { 
 				yPos: 50
 				, items: []
 				, render: function () { }
+				, xScale: 1.0
 			}
 		};
 		$.widget( "Bolero.smoothContainer"
 						, container);
-		console.log('added widget');
-	})($);
-//);
+	}
+);
