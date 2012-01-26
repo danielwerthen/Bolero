@@ -13,8 +13,8 @@ define(
 		}
 		function renderMessage(element, data) {
 			if (data.editable) {
-				$('<h3><input type="text">Title</input></h3').appendTo(element);
-				$('<p><input type="text">Message</input></h3').appendTo(element);
+				$('<h3><input type="text" value="Title"></input></h3').appendTo(element);
+				$('<p><textarea>Enter your message here!</textarea></p>').appendTo(element);
 				makeDraggable(element);
 			}
 			else {
