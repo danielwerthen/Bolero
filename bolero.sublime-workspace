@@ -16,58 +16,10 @@
 	"buffers":
 	[
 		{
-			"file": "tests/dbio/v4.js",
+			"file": "//gnovmlfvaro/C$/AroWeb ftp root/X.Dev/Integration/MessageBox/FPL01685663_120124125744.XML",
 			"settings":
 			{
-				"buffer_size": 754,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "dbio-v4.js",
-			"settings":
-			{
-				"buffer_size": 2028,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "server/communities/communityService.js",
-			"settings":
-			{
-				"buffer_size": 2196,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "dbio-v3.js",
-			"settings":
-			{
-				"buffer_size": 4013,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "seq.js",
-			"settings":
-			{
-				"buffer_size": 4514,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "lib/barrier.js",
-			"settings":
-			{
-				"buffer_size": 624,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "lib/xSeq.js",
-			"settings":
-			{
-				"buffer_size": 2708,
+				"buffer_size": 530,
 				"line_ending": "Windows"
 			}
 		}
@@ -96,10 +48,35 @@
 	},
 	"file_history":
 	[
+		"//gnovmlfvaro/C$/AroWeb ftp root/X.Dev/Integration/MessageBox/FPL01685558_120120151930.XML",
+		"//gnovmlfvaro/C$/AroWeb ftp root/X.Dev/Integration/MessageBox/FPL01685557_120120151651.XML",
+		"//gnovmlfvaro/C$/AroWeb ftp root/X.Dev/Integration/MessageBox/FPL01685532_120120120622.XML",
+		"/C/git/Bolero/public/client/js/Core/functions/functions.js",
+		"/C/git/Bolero/public/client/js/Modules/listThoughtModule/listThoughtModule.js",
+		"/C/git/Bolero/public/client-v2/js/Modules/dataEngineModule/dataEngineModule.js",
+		"/C/git/Bolero/public/client/js/Modules/thoughtModule/thoughtModule.js",
+		"/C/git/Bolero/public/client-v3/js/lib/conversationContainer.js",
+		"/C/git/Bolero/public/client-v3/js/main.js",
+		"/C/git/Bolero/public/client-v3/index.html",
+		"/C/AROWeb/X/DevTools/HotCakeTheme/example/css/style.css",
+		"/C/AROWeb/X/DevTools/HotCakeTheme/example/index.htm",
+		"/C/AROWeb/X/DevTools/HotCakeTheme/example/includes/scripts.js",
+		"/C/AROWeb/X/DevTools/HotCakeTheme/example/includes/slider.js",
+		"/C/AROWeb/X/DevTools/HotCakeTheme/template/includes/slider.js",
+		"/C/AROWeb/X/DevTools/HotCakeTheme/template/includes/scripts.js",
+		"/C/AROWeb/X/DevTools/HotCakeTheme/template/css/style.css",
+		"/C/AROWeb/X/DevTools/HotCakeTheme/template/index.htm",
+		"/C/git/Bolero/tests/dbio/v4.js",
+		"/C/git/Bolero/lib/xSeq.js",
+		"/C/git/Bolero/lib/barrier.js",
+		"/C/git/Bolero/seq.js",
+		"/C/git/Bolero/dbio-v3.js",
+		"/C/git/Bolero/server/communities/communityService.js",
+		"/C/git/Bolero/dbio-v4.js",
+		"/C/AROWeb/X/AROWeb/Public/Client/Lfv.AroWeb.Public.Client/Scripts/Vendor/HotCake/scripts.js",
 		"/C/git/Bolero/node_modules/seq/index.js",
 		"/C/git/Bolero/node_modules/mongodb/lib/mongodb/collection.js",
 		"/C/git/Bolero/node_modules/mongodb/lib/mongodb/cursor.js",
-		"/C/git/Bolero/dbio-v3.js",
 		"/C/git/Bolero/public/apps/sockets-v2.html",
 		"/C/git/Bolero/socket-v2.js",
 		"/C/git/Bolero/api.js",
@@ -167,6 +144,12 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"active",
+			"next",
+			"#branding",
+			"branding",
+			".previous",
+			"next",
 			"join",
 			"console",
 			"prototype",
@@ -205,193 +188,26 @@
 			[
 				{
 					"buffer": 0,
-					"file": "tests/dbio/v4.js",
+					"file": "//gnovmlfvaro/C$/AroWeb ftp root/X.Dev/Integration/MessageBox/FPL01685663_120124125744.XML",
 					"settings":
 					{
-						"buffer_size": 754,
+						"buffer_size": 530,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								515,
-								515
+								84,
+								84
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"translate_tabs_to_spaces": false
+							"syntax": "Packages/XML/XML.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "dbio-v4.js",
-					"settings":
-					{
-						"buffer_size": 2028,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1270,
-								1270
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 972.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "server/communities/communityService.js",
-					"settings":
-					{
-						"buffer_size": 2196,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								331,
-								331
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "dbio-v3.js",
-					"settings":
-					{
-						"buffer_size": 4013,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								315,
-								315
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 360.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "seq.js",
-					"settings":
-					{
-						"buffer_size": 4514,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								580,
-								580
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "lib/barrier.js",
-					"settings":
-					{
-						"buffer_size": 624,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "lib/xSeq.js",
-					"settings":
-					{
-						"buffer_size": 2708,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								469,
-								473
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 810.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
