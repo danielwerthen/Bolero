@@ -7,8 +7,9 @@ define(
 		function _create() {
 			var self = this;
 			self.element.dialog(
-				{ height: 400
-				, modal: true
+				{ modal: true
+				, draggable: false
+				, resizable: false
 				});
 		}
 
@@ -18,7 +19,7 @@ define(
 						, dialog );
 
 		function open() {
-			var container = $('<div class="add-message-dialog"></div>');
+			var container = $('<div></div>');
 			container.append('<input class="title" type="text" value="What were you thinking!"></input>');
 			container.append('<textarea class="message">I ain\'t following you know...</textarea>');
 			container.addMessageDialog();

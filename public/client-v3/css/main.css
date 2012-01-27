@@ -1,4 +1,4 @@
-.message, .add-message-dialog, input{
+.message {
 
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing:    border-box;
@@ -161,14 +161,40 @@
 	height: 18px;
 }
 
+.add-message-dialog {
+	position: absolute;
+	top: 12.5%;
+	left: 12.5%;
+}
+
 .add-message-dialog input {
 	border: none;
 	padding: 0px 0px 0px 0px;
+
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing:    border-box;
+	-ms-box-sizing:     border-box;
+	-o-box-sizing:      border-box;
+	box-sizing:         border-box;
+
+	font-family: 'PT Serif'; 
+	font-size: 16px;
+	line-height: 1.5;
 }
 
 .add-message-dialog textarea {
 	border: none;
 	padding: 0px 0px 0px 0px;
+
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing:    border-box;
+	-ms-box-sizing:     border-box;
+	-o-box-sizing:      border-box;
+	box-sizing:         border-box;
+
+	font-family: 'PT Serif'; 
+	font-size: 16px;
+	line-height: 1.5;
 }
 
 .add-messagedialog:focus {
