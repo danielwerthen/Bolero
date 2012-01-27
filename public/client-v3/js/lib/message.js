@@ -1,8 +1,9 @@
 define(
 	[ "jquery"
 	, "lib/dataEngine"
+ 	, "lib/addMessageDialog"
 	, "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js" ]
-	, function ($, dataEngine) {
+	, function ($, dataEngine, dialog) {
 		function makeDraggable(element) {
 			element.draggable({
 				cursorAt: { top: 0, left: -25 }
@@ -13,8 +14,18 @@ define(
 		}
 		function renderMessage(element, data) {
 			if (data.editable) {
-				$('<h3><input type="text" value="Title"></input></h3').appendTo(element);
-				$('<p><textarea>Enter your message here!</textarea></p>').appendTo(element);
+				if (data.container)
+					element.append(data.container);
+				else {
+					var container = $('<div class="newMessage"></div>').appendTo(element);
+					$('<button>+</button>')
+						.appendTo(container);
+					data.container = container;
+				}
+				$('button', element)
+					.click(function () {
+						dialog.open();
+					});
 				makeDraggable(element);
 			}
 			else {
