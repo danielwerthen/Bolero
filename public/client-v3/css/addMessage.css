@@ -1,0 +1,50 @@
+body {
+	background: #999;
+}
+
+.page {
+	position: relative;
+	top: 0px;
+	bottom: 0px;
+	left: 12.5%;
+	right: 12.5%;
+	width: 75%;
+	max-width: 800px;
+	background: #eee;
+	padding-top: 45px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+
+}
+
+.section {
+	position: relative;
+	top: 0px;
+	right: 0px;
+	margin-right: 20px;
+	margin-left: auto;
+	max-width: 400px;
+	width: 70%;
+}
+
+.section p {
+	font-family: "Georgia";
+	font-size: 16px;
+	line-height: 1.65;
+	color: #222;
+}
+
+.section p:after {
+	display: block;
+	text-align: center;
+	margin-top: 10px;
+	content: "----------------------------------";
+}
+
+.section p:before {
+	line-height: 1;
+	content: attr(data-content);
+	font-size: 30px;
+	font-weight: 700;
+}
