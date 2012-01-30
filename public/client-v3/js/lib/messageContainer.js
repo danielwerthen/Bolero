@@ -22,10 +22,18 @@ define(
 		function _render(data) {
 			var item = $(this);
 			item.empty();
-			var m = $('<div></div>')
-				.message()
-				.message('load', data)
-				.appendTo(item);
+			if (data.isEditable) {
+				$('<div></div>')
+					.message()
+					.message('new', data)
+					.appendTo(item);
+			}
+			else {
+				var m = $('<div></div>')
+					.message()
+					.message('load', data)
+					.appendTo(item);
+			}
 		}
 
 		function load(conversation) {
@@ -35,6 +43,12 @@ define(
 					return 0;
 				return a.linkDate >= b.linkDate ? 1 : -1;
 			});
+			/*messages.push(
+				{	linkDate: new Date()
+				, messageId: 0
+				, isEditable: true
+				}
+			);*/
 			self.element.smoothContainer({ items: messages });
 		}
 

@@ -26,12 +26,25 @@ define(
 			}
 		});
 
+		var cache = {};
 		function emit(method, data, fn) {
-			if (connected)
-				sio.emit(method, data, fn);
+			if (connected) {
+				if (!cache[method])
+					cache[method] = {};
+				var key = JSON.stringify(data);
+				if (!cache[method][key]) {
+					sio.emit(method, data, function (res) {
+						cache[method][key] = res;
+						fn(res);
+					});
+				}
+				else {
+					fn(cache[method][key]);
+				}
+			}
 			else
 				queue.push(function () {
-					sio.emit(method, data, fn);
+					emit(method, data, fn);
 				});
 		}
 
