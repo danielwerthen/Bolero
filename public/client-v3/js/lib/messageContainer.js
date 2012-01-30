@@ -34,10 +34,6 @@ define(
 					return 0;
 				return a.linkDate >= b.linkDate ? 1 : -1;
 			});
-			messages.push(
-				{ editable: true
-				, messageId: 0
-				});
 			self.element.smoothContainer({ items: messages });
 		}
 

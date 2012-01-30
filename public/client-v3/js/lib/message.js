@@ -1,9 +1,8 @@
 define(
 	[ "jquery"
 	, "lib/dataEngine"
- 	, "lib/addMessageDialog"
 	, "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js" ]
-	, function ($, dataEngine, dialog) {
+	, function ($, dataEngine) {
 		function makeDraggable(element) {
 			element.draggable({
 				cursorAt: { top: 0, left: -25 }
@@ -13,33 +12,16 @@ define(
 			});
 		}
 		function renderMessage(element, data) {
-			if (data.editable) {
-				if (data.container)
-					element.append(data.container);
-				else {
-					var container = $('<div class="newMessage"></div>').appendTo(element);
-					$('<button>+</button>')
-						.appendTo(container);
-					data.container = container;
+			element.html('loading');
+			dataEngine.emit('getMessage'
+				, { messageId: data.messageId }
+				, function (message) {
+					element.empty();
+					$('<h3>' + message.title + '</h3>').appendTo(element);
+					$('<p>' + message.message + '</p>').appendTo(element);
+					makeDraggable(element);
 				}
-				$('button', element)
-					.click(function () {
-						dialog.open();
-					});
-				makeDraggable(element);
-			}
-			else {
-				element.html('loading');
-				dataEngine.emit('getMessage'
-					, { messageId: data.messageId }
-					, function (message) {
-						element.empty();
-						$('<h3>' + message.title + '</h3>').appendTo(element);
-						$('<p>' + message.message + '</p>').appendTo(element);
-						makeDraggable(element);
-					}
-				);
-			}
+			);
 		}
 		var message = {
 			load: function (message) {
