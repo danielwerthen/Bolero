@@ -84,11 +84,13 @@ define(
 		function _layout() {
 			var width = self.element.width()
 				, step = width / 3
-				, y = self.options.yPos;
+				, y = self.options.yPos
+				, xOffset = self.options.xOffset;
+			step = step < self.options.minStep ? self.options.minStep : step;
 			self.element.children().each(function () {
 				var item = $(this)
 					, i = item.data('index')
-					, x = (i + 1 ) * step * self.options.xScale
+					, x = (i + 0.5 ) * step * self.options.xScale + xOffset
 					, trans = 'translate(' + x + 'px, ' + y + 'px)';
 				item.css({
 					'-webkit-transform': trans
@@ -151,6 +153,8 @@ define(
 				, items: []
 				, render: function () { }
 				, xScale: 1.0
+				, xOffset: 0
+				, minStep: 450
 			}
 		};
 		$.widget( "Bolero.smoothContainer"

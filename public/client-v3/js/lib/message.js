@@ -17,8 +17,7 @@ define(
 				, { messageId: data.messageId }
 				, function (message) {
 					element.empty();
-					$('<h3>' + message.title + '</h3>').appendTo(element);
-					$('<p>' + message.message + '</p>').appendTo(element);
+					$('<textarea>' + message.message + '</textarea>').appendTo(element);
 					makeDraggable(element);
 				}
 			);

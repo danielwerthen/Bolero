@@ -9,7 +9,7 @@ require(
 				[ "lib/conversationContainer" 
 				, "lib/messageContainer" 
 				, "lib/messageDropZone" ]
-				, function () {
+				, function (convo, messageContainer, drop) {
 					$('#conversationContainer').conversationContainer();
 					$('#messages').messageContainer();
 					$('#messageDropZone').messageDropZone();

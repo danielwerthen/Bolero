@@ -14,7 +14,8 @@ define(
 				{
 					render: _render
 					, yPos: 75
-					, xScale: 1.5
+					, xScale: 1.75
+					, xOffset: -50
 				});
 		}
 
