@@ -7,7 +7,9 @@ var io = require('socket.io'),
 		Session = require('connect').middleware.session.Session,
 		parseCookie = require('connect').utils.parseCookie,
 		auth = require('./server-v2/auth.js'),
-		cio = require('./server-v2/conversationsio.js');
+		cio = require('./server-v2/conversationsio.js'),
+		conv = require('./server-v2/conversations.js'),
+		users = require('./server-v2/users.js');
 
 
 app.configure(function () {
@@ -18,23 +20,62 @@ app.configure(function () {
 	app.use(express.session({ store: sessionStore,
 		secret: 'this is secret', 
 		key: 'express.sid'}));
+	app.use(function (req, res, next) {
+		if ((!res.session || !res.session.auth) && req.url !== '/index' && req.url !== '/login') {
+			return res.redirect('/index');
+		}
+		if (!res.render.overridden) {
+			var _render = res.render;
+			res.render = function (view, options) {
+				options = options || {};
+				options.auth = req.session.auth;
+				options.currentUser = req.session.currentUser;
+				_render.apply(res, [view, options]);
+			};
+			res.render.overridden = true;
+		}
+		return next();
+	});
 	app.use(app.router);
 	app.set('view engine', 'jade');
-	app.all(function (req, res, next) {
-		console.log('all');
-		next();
+	app.set('views', __dirname + '/views-v2');
+});
+
+app.get('/index', function (req, res) {
+	res.render('index.jade');
+});
+
+app.get('/read', function (req, res) {
+	users.getConversations(req.session.currentUser._id, function (err, convs) {
+		if (err) {
+			console.log(err);
+			res.redirect('/index');
+		}
+		else
+			res.render('read.jade', { conversations: convs });
 	});
 });
 
-app.get('/', function (req, res) {
-  res.writeHead(200, {
-    'Content-Type': 'text/plain',
+app.get('/review', function (req, res) {
+	res.render('index.jade');
+});
+
+app.get('/write/:id', function (req, res) {
+	console.log(req.params.id);
+	conv.getMessages(req.params.id, function (err, messages) {
+		if (err) {
+			console.log(err);
+			res.render('/index');
+		}
+		else {
+			res.render('write.jade', { messages: messages });
+		}
 	});
-  res.end('<h2>Hello, use socketio to connect to me!</h2>');
 });
 
 app.get('/login', auth.get);
 app.post('/login', auth.post);
+app.get('/logout', auth.logout('/index'));
 app.get('/register', auth.getRegister);
 app.post('/register', auth.postRegister);
 

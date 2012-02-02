@@ -1,0 +1,43 @@
+.messages {
+}
+
+.message {
+	max-width: 400px;
+	font-size: 16px;
+	line-height: 1.55;
+	font-family: "Georgia";
+}
+
+.message p {
+	font-family: inherit;
+	font-size: inherit;
+	line-height: inherit;
+}
+
+.message p:before {
+	line-height: 1;
+	content: attr(data-content);
+	font-size: 30px;
+	font-weight: 700;
+}
+
+.message textarea {
+	height: 300px;
+	width: 100%;
+	overflow: hidden;
+}
+
+.message input {
+	display: block;
+	font-family: inherit;
+	font-size: inherit;
+	line-height: inherit;
+}
+
+.message:not(:last-child):after {
+	text-align: center;
+	margin-top: 15px;
+	margin-bottom: 10px;
+	display: block;
+	content: '---------------'
+}

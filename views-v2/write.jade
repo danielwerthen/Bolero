@@ -1,0 +1,9 @@
+.conversation 
+	.messages 
+		each m in messages 
+			.message
+				p(data-content=m.message.substr(0,1))= m.message.substr(1)
+	.message
+		form(action='/write', type='post')
+			textarea(name='message')
+			input(type='submit', value='save')

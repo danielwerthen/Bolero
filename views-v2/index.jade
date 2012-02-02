@@ -1,0 +1,10 @@
+h1 Your words, today!
+p Just the way you like it!
+- if ( !auth )
+	.login
+		form(action='/login', enctype='multipart/form-data', method='post')
+				label Email
+					input(name='email', tabindex=1)
+				label Password
+					input(name='password', type='password', tabindex=2)
+				input(value='submit', type='submit', tabindex=3)

@@ -1,0 +1,5 @@
+.conversations
+	ul
+		each c in conversations
+			li
+				a(href='/write/' + c._id)= c.title

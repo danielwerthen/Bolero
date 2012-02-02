@@ -1,23 +1,24 @@
 var dbio = require('../dbio-v4.js');
 
 function fail(res) {
-  res.writeHead(200, {
-    'Content-Type': 'application/json',
-  });
-  res.end(JSON.stringify({ authorized : false }));
+	res.redirect('/index');
 }
 
 function approve(res) {
-  res.writeHead(200, {
-    'Content-Type': 'application/json',
-  });
-  res.end(JSON.stringify({ authorized : true }));
+	res.redirect('/index');
 }
 
 function login(user, req, res) {
 	console.log('connected user through login');
 	req.session.currentUser = user;
 	req.session.auth = true;
+}
+
+exports.logout = function (redirect) {
+	return function (req, res) {
+		req.session.destroy();
+		res.redirect(redirect);
+	}
 }
 
 exports.post = function (req, res) {
@@ -53,7 +54,7 @@ exports.post = function (req, res) {
 };
 
 exports.get = function (req, res) {
-	res.render('login');
+	res.render('index');
 };
 
 exports.getRegister = function (req, res) {
