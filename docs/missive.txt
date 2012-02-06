@@ -1,0 +1,32 @@
+Missive!
+
+What 
+A collaborative publishing platform
+Why 
+Publishing can me more effective, productive and quality prone as a group effort
+How
+Simple input methods
+Filtering and amplification of inputted data
+Refinement of input into publishable versions
+
+Vad är viktigt för producenten?
+Underlätta för kvalitet
+Enkel publikation
+
+Vad är viktigt för konsumenten?
+Överskådligt
+Lätt att följa bra material
+
+
+Scenario
+En grupp av producenter går ihop och bildar ett nätverk
+Tjänsten facilerar kommunikation inom nätverket
+Nätverkets deltagare producerar artiklar
+Artiklarna undergår review utav de andra deltagarna
+Efter godkännande av nätverket och ansvarig utgivare publiseras artiklarna på nätverkets frontpage
+
+
+Betalt innehåll
+En grupp av konsumenter söker tillsammans efter en producerande part som följer deras intresse
+(För att vända "bevisbörda")
+Gratisinnehåll för att locka publik
