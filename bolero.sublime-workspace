@@ -46,6 +46,14 @@
 				"buffer_size": 721,
 				"line_ending": "Windows"
 			}
+		},
+		{
+			"file": "rnd/layout/layout.css",
+			"settings":
+			{
+				"buffer_size": 671,
+				"line_ending": "Windows"
+			}
 		}
 	],
 	"build_system": "",
@@ -207,7 +215,7 @@
 	"groups":
 	[
 		{
-			"selected": 3,
+			"selected": 4,
 			"sheets":
 			[
 				{
@@ -304,6 +312,33 @@
 						"selection":
 						[
 							[
+								720,
+								615
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/CSS/CSS.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 420.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "rnd/layout/layout.css",
+					"settings":
+					{
+						"buffer_size": 671,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
 								0,
 								0
 							]
@@ -314,7 +349,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 420.0,
+						"translation.y": 300.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"

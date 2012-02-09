@@ -21,7 +21,7 @@ app.configure(function () {
 		secret: 'this is secret', 
 		key: 'express.sid'}));
 	app.use(function (req, res, next) {
-		if ((!res.session || !res.session.auth) && req.url !== '/index' && req.url !== '/login') {
+		if ((!req.session || !req.session.auth) && req.url !== '/index' && req.url !== '/login') {
 			return res.redirect('/index');
 		}
 		if (!res.render.overridden) {
