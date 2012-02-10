@@ -1,9 +1,18 @@
-.conversation 
-	.messages 
-		each m in messages 
-			.message
-				p(data-content=m.message.substr(0,1))= m.message.substr(1)
-	.message
-		form(action='/write', type='post')
-			textarea(name='message')
-			input(type='submit', value='save')
+.paper.container-fluid
+	.header.row-fluid
+		each m in messages.slice(0,5)
+			.message.span2
+				p= m.message
+	.body.row-fluid
+		.left.span3
+			each m in messages.slice(1, 5)
+				.message
+					p= m.message
+		.center.span6
+			each m in messages.slice(2, 6)
+				.message
+					p= m.message		
+		.right.span3
+			each m in messages.slice(1, 5)
+				.message
+					p= m.message

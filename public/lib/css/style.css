@@ -1,11 +1,44 @@
 .messages {
 }
 
-.message {
-	max-width: 400px;
-	font-size: 16px;
+.paper {
+	font-size: 12px;
 	line-height: 1.55;
 	font-family: "Georgia";
+}
+
+.header {
+	max-height: 75px;
+	overflow: hidden;
+}
+
+.header .message {
+	min-width: 200px;
+	max-height: 145px;
+	overflow: hidden;
+}
+
+.body .message {
+	max-height: 75px;
+	overflow: hidden;
+	margin-bottom: 25px;
+}
+
+.center .message {
+	max-height: 295px;
+}
+
+.center {
+	font-size: 16px;
+}
+
+.body:before {
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 25px;
+}
+
+.body .message {
 }
 
 .message p {
@@ -14,11 +47,13 @@
 	line-height: inherit;
 }
 
-.message p:before {
-	line-height: 1;
-	content: attr(data-content);
-	font-size: 30px;
-	font-weight: 700;
+.message p:first-letter {
+	float: left;
+	font-size: 350%;
+	line-height: 0.87;
+	font-weight: 600;
+	margin-right: 3px;
+	margin-bottom: 0px;
 }
 
 .message textarea {
@@ -34,10 +69,3 @@
 	line-height: inherit;
 }
 
-.message:not(:last-child):after {
-	text-align: center;
-	margin-top: 15px;
-	margin-bottom: 10px;
-	display: block;
-	content: '---------------'
-}
